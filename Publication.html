@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,17 +34,22 @@
 		
 		/* 导航背景与居中 */
 		#navbg{
-			background:#9BCD9B;
+			background:	#990000;
 			margin: 0 auto;
 		}
 		#navbg a{
-			color: #fff !important;
-			font-size: 30px;
-			font-weight: 700;
+			color: #fff ;
+			font-size: 25px;
+			font-weight: 350;
+			display: inline-block;
 		}
-		
-		
-		
+		#navbg a:visited {
+			color: #fff; /* 已访问链接颜色，与默认颜色相同 */
+		}
+		#navbg a:hover{
+			color: #FFFF00;
+		}
+
 		
         .div_listview {
             width: 1000px;
@@ -90,21 +93,24 @@
     </style>
 </head>
 <body>
-    <div align="center">
+	<div align="center">
+		<a href="./index.html" target="_blank">
+			<img id="Image1" src="Image/Optimal_img.jpg" style="width:60%;" />
+		</a>
+	</div>
+	<div align="center">
 		<div id="navbg" class="daohang">
-		    <ul id="navlist">
-		        <li><a href="./index.html">Home </a></li>
-		        <li><a href="./Member.html">Members</a></li>
-		        <li><a href="./Publication.html">Publications </a></li>
-		        <li><a href="./Resource.html">Resources</a></li>
+			<ul id="navlist">
+				<li><a href="./index.html">Home </a></li>
+				<li><a href="./Member.html">Members</a></li>
+				<li><a href="./Publication.html">Publications </a></li>
+				<li><a href="./Resource.html">Resources</a></li>
 				<li><a href="./Link.html">Links </a></li>
-		        <li><a href="./News.html">News</a></li>
-		    </ul>
+				<li><a href="./News.html">News</a></li>
+
+			</ul>
 		</div>
-        <a href="./index.html" target="_blank">
-            <img id="Image1" src="Image/Optimal_img.jpg" style="width:60%;" />
-        </a>
-    </div>
+	</div>
 
     <div id="container">
 
@@ -140,45 +146,46 @@ function __doPostBack(eventTarget, eventArgument) {
 	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="79A28BD2" />
 	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAA7S9dyfyKL1dTS1l63u2mn8C8GpGxalhgECLeqel0CVMaqHt6+Rp7jqcbeaWuz5YpfVjQrw7df4zTYcvYWNY1ZPh1+RA21sYKABfMfWjFcZJX7QA4EEpQV8aUD4GC2gNKDQ+1Sy5tEuM7rvBfSJ7Az3Y1JaSHp22kI+BbH4t42f7pJ9bIM1MP2nbf2cZPhgo9vsICv5JHt3WlvT8TJPs1ZsjcHq06WwPCqud9A8JxtNKPWruTH9crSUxrcbFRNzq+S6tXbShqerRIuMcIJKKu0UxSZhUsBPe9TFEhcyBiQpI5BMF1U72E7cvDBlwjKqJZqHiZ5jRJP051PR32lRICw1" />
 </div>
-                <div>
   
-      <div id="PageContentDiv">
+      <div id="PageContentDiv" style="white-space: nowrap;">
 		 <!-- <div class="date_box"></div> -->
-    <h3><b><a name="Director"></a></b>
-			  <b class="buleR" ><a href="./Publication.html#Publications by year:" target="_blank" title="Publications by year:">Publications by year:</a></b> 
-                      
-					  
-	</h3>
-	</div>      
-    
+    <h3 style="margin-left: -20px;color: #880000;border-bottom: 1px dashed #DCDCDC"><span name="Publications by year:">Publications by year:</span></h3>
+	</div>
+
 <body>
 	<table border="0">
-		<tr>	
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2022-form')">&nbsp;2022&nbsp;</button></td>
-			
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2021-form')">&nbsp;2021&nbsp;</button></td>
-			
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2020-form')">&nbsp;2020&nbsp;</button></td>
-			
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2019-form')">&nbsp;2019&nbsp;</button></td>
-			
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2018-form')">&nbsp;2018&nbsp;</button></td>
-			
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2017-form')">&nbsp;2017&nbsp;</button></td>
-			
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2016-form')">&nbsp;2016&nbsp;</button></td>
-			
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2015-form')">&nbsp;2015&nbsp;</button></td>
-			
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2014-form')">&nbsp;2014&nbsp;</button></td>
+		<tr>
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2023-form')">&nbsp;2023&nbsp;</button></font></td>
 
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2013-form')">&nbsp;2013&nbsp;</button></td>
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2022-form')">&nbsp;2022&nbsp;</button></font></td>
 			
-			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year before 2012-form')">&nbsp;before&nbsp;2012&nbsp;</button></td>
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2021-form')">&nbsp;2021&nbsp;</button></font></td>
+			
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2020-form')">&nbsp;2020&nbsp;</button></font></td>
+			
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2019-form')">&nbsp;2019&nbsp;</button></font></td>
+			
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2018-form')">&nbsp;2018&nbsp;</button></font></td>
+			
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2017-form')">&nbsp;2017&nbsp;</button></font></td>
+			
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2016-form')">&nbsp;2016&nbsp;</button></font></td>
+			
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2015-form')">&nbsp;2015&nbsp;</button></font></td>
+			
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2014-form')">&nbsp;2014&nbsp;</button></font></td>
+
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year2013-form')">&nbsp;2013&nbsp;</button></font></td>
+			
+			<td width="140" height="50" ><font size="3"><button type="button"  style='font-size:20px' onclick="showDiv('year before 2012-form')">&nbsp;before&nbsp;2012&nbsp;</button></font></td>
 		</tr>		
-	</table>		
-		
-	<div1 id="year2022-form" style="display: block;">
+	</table>
+
+	<div1 id="year2023-form" style="display: block;">
+		<li style="width: 1000px;">
+		</li>
+	</div1>
+	<div1 id="year2022-form" style="display: none;">
 			<li style="width: 1000px;">Yuan-Gang Pan, Ivor W Tsang, Wei-Jie Chen, Gang Niu, Masashi Sugiyama. <a href='http://www.jmlr.org/papers/v23/20-315.html' target="_blank">&nbspFast and Robust Rank Aggregation against Model Misspecification</a>, 
 				<b>Journal of Machine Learning Research</b>, 2022, 23(23):1−35. 
 				<span><a href='Resources/Code/CoarsenRank.html' target="_blank" style="color: green">[Material]</a></span>

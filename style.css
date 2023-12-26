@@ -6,8 +6,8 @@
 
 body {
 	/* font-family: Verdana,"Times New Roman", Times,cursive; */
-	font-family: Times New Roman, serif;
-	font-size: 75%;	
+	font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+	font-size: 50%;
 }
 
 .logo a{background:url(images/Optimal1.jpg) no-repeat;
@@ -59,7 +59,7 @@ body {
 .date_box_month {
 	padding-top: 6px;
 	font-size: 10px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
 	padding-left: 3px;
 	text-align: center;
 	color: #75a006;
@@ -91,9 +91,9 @@ p.quote:first-letter
 
 h1 {
 	color: #87a448;
-	margin-top: 85px;
+	margin-top: 40px;
 	margin-left:1px;
-	font-family: "Times New Roman", Times, serif;
+	font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
 	font-style: italic;
 	font-size: 3.6em;
 }
@@ -119,8 +119,8 @@ h2 {
 	color: #bf8a44;
 	margin-left: 50px;
 	font-size: 2.2em;
-	font-family: "Times New Roman", Times, serif;
-	font-style: italic;
+	font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+	font-style: normal;
 }
 
 h3 {
@@ -129,7 +129,7 @@ h3 {
 	padding-top: 20px;
 	padding-left: 25px;
 	font-size: 1.4em;
-	font-family: "Times New Roman", Times, serif;
+	font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
 	/*font-style: italic;*/
 	font-weight: bold;
 	#color: #84A54A;
