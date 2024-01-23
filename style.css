@@ -3,6 +3,9 @@
 * {margin: 0; padding: 0;}
 
 /************************************Georgia, * Main structure *************************/
+html {
+	overflow-y: scroll;
+}
 
 body {
 	/* font-family: Verdana,"Times New Roman", Times,cursive; */

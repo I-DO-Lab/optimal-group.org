@@ -34,12 +34,12 @@
 		
 		/* 导航背景与居中 */
 		#navbg{
-			background:	#990000;
+			background:	purple;
 			margin: 0 auto;
 		}
 		#navbg a{
 			color: #fff ;
-			font-size: 25px;
+			font-size: 20px;
 			font-weight: 350;
 			display: inline-block;
 		}
@@ -49,19 +49,12 @@
 		#navbg a:hover{
 			color: #FFFF00;
 		}
-
-		
-        .div_listview {
-            width: 1000px;
-        }
-
-        .div_item {
-            margin-bottom: 1px;
-            padding: 1px;
-            font-family: Georgia;
-            font-size: 16px;
-            line-height: 22px;
-        }
+		#navlist li {
+			margin-right: -20px;
+			margin-left: -25px;/* 设置间距大小，可以根据需要进行调整 */
+			padding-left: 55px;
+			padding-right: 25px;/* 设置间距大小，可以根据需要进行调整 */
+		}
 
             .div_item:hover {
                 background-color: #dedede;
@@ -93,24 +86,25 @@
     </style>
 </head>
 <body>
-	<div align="center">
-		<a href="./index.html" target="_blank">
-			<img id="Image1" src="Image/Optimal_img.jpg" style="width:60%;" />
-		</a>
-	</div>
-	<div align="center">
-		<div id="navbg" class="daohang">
-			<ul id="navlist">
-				<li><a href="./index.html">Home </a></li>
-				<li><a href="./Member.html">Members</a></li>
-				<li><a href="./Publication.html">Publications </a></li>
-				<li><a href="./Resource.html">Resources</a></li>
-				<li><a href="./Link.html">Links </a></li>
-				<li><a href="./News.html">News</a></li>
+<div style="margin-left: 260px">
+	<a href="./index.html" target="_blank">
+		<img id="Image1" src="Image/Optimal_img.jpg" style="width:40%;" />
+	</a>
+</div>
+<div align="center" >
+	<div id="navbg" class="daohang">
+		<ul id="navlist">
+			<li><a href="./index.html">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li><a  href="./Member.html">Members&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li><a  href="./Publication.html">Publications&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li><a  href="./Resource.html">Resources&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li><a  href="./Link.html">Links&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li><a  href="./Project.html">Project&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+			<li><a  href="./News.html">News</a></li>
 
-			</ul>
-		</div>
+		</ul>
 	</div>
+</div>
 
     <div id="container">
 
@@ -149,7 +143,7 @@ function __doPostBack(eventTarget, eventArgument) {
   
       <div id="PageContentDiv" style="white-space: nowrap;">
 		 <!-- <div class="date_box"></div> -->
-    <h3 style="margin-left: -20px;color: #880000;border-bottom: 1px dashed #DCDCDC"><span name="Publications by year:">Publications by year:</span></h3>
+    <h3 style="margin-left: -20px;color: purple;border-bottom: 1px dashed #DCDCDC"><span name="Publications by year:">Publications by year:</span></h3>
 	</div>
 
 <body>
