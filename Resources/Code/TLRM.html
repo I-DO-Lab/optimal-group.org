@@ -1,0 +1,225 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>TLRM</title>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<div class="logo" align="center"><a href="../../index.html" target="_blank"></a></div>
+<div id="container">
+    <p align="right">[<a href="../../index.html" target="_self" >Home</a>]</p>
+    </br>
+    <h5><font face="Times New Roman" size="4"><b>TLRM</b></font></h5>
+    <hr />
+    <p> A Demo Matlab code (<font face="Texttt" size="3">L2n_TeL2SVR_M.mat</font>) for "Large Scale Non-convex Regression with Truncated Loss via Majorization-Minimization Algorithm" (TLRM). (Click [<a href="https://i-do-lab.github.io/optimal-group.org/Resources/Code/TLRM/TLRM.rar"><b><font color="blue">Here</font></b></a>] to download the matlab codes for other methods in TLRM.) </p>
+
+    <br />
+    <h5><font face="Times New Roman" size="4"><b>Reference</b></font></h5>
+    <hr />
+    <p><a href="https://i-do-lab.github.io/optimal-group.org/member/hlw.html">Ling-Wei Huang</a>, <a href="https://i-do-lab.github.io/optimal-group.org/member/syh.html">Yuan-Hai Shao</a>, <a href="https://i-do-lab.github.io/optimal-group.org/member/lxj.html">Xiao-Jing Lv</a>, <a href="https://i-do-lab.github.io/optimal-group.org/member/lcn.html">Chun-Na Li</a>. Large Scale Non-convex Regression with Truncated Loss via Majorization-Minimization Algorithm. <i><font color="blue">Submitted to <a href="https://www.sciencedirect.com/journal/european-journal-of-operational-research"><u>European Journal of Operational Research</u></a></font></i>, EJOR-D-23-02033.</p>
+
+    <br />
+    <h5><font face="Times New Roman" size="4"><b>Main Function</b></font></h5>
+    <hr />
+
+    <p>Required: the mex files "LIB_train_L2.mexw64","LIB_predict_L2.mexw64" of <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvm/"><u>LIBSVM</u></a>,  or "Linear_train.mexw64", "Linear_predict.mexw64" of <a href="https://www.csie.ntu.edu.tw/~cjlin/liblinear/"><u>Liblinear</u></a>. </p>
+
+    <div style="white-space:pre">
+        <b class="purple"> [ PredictY , model ] = L2n_TeL2SVR_M( ValX , Trn , Para ) </b>
+        <b class="green">
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            % % Solving L2-norm Truncated-eL2-loss SVR by TLRM
+            % % min 0.5*w'*w + C * min{ L2(aerr) , L2(mu) }
+            % % s.t.   L2(z) = max{z-eps,0}^2
+            % %        aerr = |Y-(X*w+b)|
+            % % Ref - Ling-Wei Huang, Yuan-Hai Shao*, Xiao-Jing Lv, Chun-Na Li.
+            % %          Large Scale Non-convex Regression with Truncated Loss via Majorization-Minimization Algorithm.
+            % %          Submitted to European Journal of Operational Research, 2024.
+            % % Site - http://www.optimal-group.org/Resources/Code/TLRM.html.
+            % _______________________________ Input  _______________________________
+            %      Trn.X  -  m x n matrix, explanatory variables in training data
+            %      Trn.Y  -  m x 1 vector, response variables in training data
+            %      ValX   -  mt x n matrix, explanatory variables in Validation data
+            %      Para.p1  -  the emperical risk parameter C
+            %      Para.p2  -  the eps-insensitive parameter
+            %      Para.p3  -  the truncated related parameter for residual or loss
+            %      Para.kpar  -  kernel para, include type and para value of kernel
+            % ______________________________ Output  ______________________________
+            %     PredictY  -  mt x 1 vector, predicted response variables for ValX
+            %     model  -  model related info: w, b, nSV/wks, time, iter, etc.
+            %
+            % % Written by Ling-Wei Huang.
+            % % Latest Update: 2023.04.05.
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+        </b><div style="width:1050px; height:1px; margin:0px auto; padding:0px; background-color: #D5D5D5; overflow: hidden;"></div><b><font color="green">%% Base Model Switch - control variable: BM</font>
+        <b class="green">
+        % % 0 -- LIBLINEAR_L2n_eL2SVR_primal (Default) [1b]
+        % %              with bias in decision funciton, but NOT in objective funciton.
+        % % 1 -- LIBLINEAR_L2n_eL2SVR_primal [2b]
+        % %              with bias in decision funciton, and in objective funciton.
+        % % 2 -- LIBLINEAR_L2n_eL2SVR_primal (Not recommanded) [0b]
+        % %              NEITHER bias in decision funciton, NOR in objective funciton.
+        % % 3 -- LIBLINEAR_L2n_eL2SVR_dual [2b]
+        % %              with bias in decision funciton, and in objective funciton.
+        % % 4 -- LIBLINEAR_L2n_eL2SVR_dual (Not recommanded) [0b]
+        % %              NEITHER bias in decision funciton, NOR in objective funciton.
+        % % 5 -- LIBSVM_L2n_eL2SVR
+        % %              kernel method can be used
+        % % 6 -- standard SVR_dual via QP
+    </b>
+
+
+    </b><div style="width:1050px; height:1px; margin:0px auto; padding:0px; background-color: #D5D5D5; overflow: hidden;"></div><b><font color="green">%% Usage </font>
+        <b class="green">
+        %         load T14+c1+m200+1000+0+Uniform+IQR.mat
+        %         Trn.X = X;    Trn.Y = Y;
+        %         ValX = X_t;      ValY = Y_t;
+        %         Para.p1 = 10^0;
+        %         Para.rY = 0.5*range(Y);
+        %         Para.iqr = iqr(Y);
+        %         Para.p2 = 0.15;
+        %         Para.p3 = 0.3;
+        %         Para.kpar.ktype = "rbf";
+        %         Para.kpar.kp1 = 2^6;
+        %         [PredictY,model] = L2n_TeL2SVR_M( ValX , Trn , Para);
+        %         RMSE = sqrt(sum((PredictY-ValY).^2)/length(ValY));
+
+    </b><div style="width:1050px; height:1px; margin:0px auto; padding:0px; background-color: #D5D5D5; overflow: hidden;"></div><b><font color="green">%% Input </font>
+        <b class="code">
+
+            X0 = sparse(Trn.X);      Y0 = Trn.Y;
+            C = Para.p1;
+            epsl = Para.p2 * Para.rY;
+            mu=epsl+Para.p3 * Para.rY;
+            kpar = Para.kpar;      ktype = kpar.ktype;      kp1 = kpar.kp1;
+
+            BM = 0;      <font color="blue">if</font> ktype~=<font color="purple">"lin"</font>, BM = 5; <font color="blue">end</font>
+            BMFun_trn = str2func(<font color="purple">"Linear_train"</font>);
+            BMFun_prd = str2func(<font color="purple">"Linear_predict"</font>);
+            <font color="blue">switch</font> BM
+                <font color="blue">case</font> 0
+                    opt = sprintf(<font color="purple">'-s 11 -B 1 -R -c %f -p %f -q'</font>, C, epsl); <font color="green">% primal 1b</font>
+                <font color="blue">case</font> 1
+                    opt = sprintf(<font color="purple">'-s 11 -B 1 -c %f -p %f -q'</font>, C, epsl); <font color="green">% primal 2b</font>
+                <font color="blue">case</font> 2
+                    opt = sprintf(<font color="purple">'-s 11 -c %f -p %f -q'</font>, C, epsl); <font color="green">% primal 0b</font>
+                <font color="blue">case</font> 3
+                    opt = sprintf(<font color="purple">'-s 12 -B 1 -c %f -p %f -q'</font>, C, epsl); <font color="green">% dual 2b</font>
+                <font color="blue">case</font> 4
+                    opt = sprintf(<font color="purple">'-s 12 -c %f -p %f -q'</font>, C, epsl); <font color="green">% dual 0b</font>
+                <font color="blue">case</font> 5
+                    BMFun_trn = str2func(<font color="purple">"LIB_train_L2"</font>);
+                    BMFun_prd = str2func(<font color="purple">"LIB_predict_L2"</font>);
+                    <font color="blue">switch</font> ktype
+                        <font color="blue">case</font> <font color="purple">"lin"</font>
+                            opt =  sprintf(<font color="purple">'-s 3 -t 0 -c %f -p %f -q'</font>, C, epsl);
+                    <font color="blue">case</font> <font color="purple">"poly"</font>
+                            gamma = 1; coef0 = 0; degree = kp1;
+                            opt =  sprintf(<font color="purple">'-s 3 -t 1 -c %f -p %f -g %f -r %f -d %f -q'</font>, C, epsl, gamma, coef0, degree);
+                    <font color="blue">case</font> <font color="purple">"rbf"</font>
+                            gamma = kp1;
+                            opt =  sprintf(<font color="purple">'-s 3 -t 2 -c %f -p %f -g %f -q'</font>, C, epsl, gamma);
+                    <font color="blue">case</font> <font color="purple">"sig"</font>
+                            gamma = kp1; coef0 = 0;
+                            opt =  sprintf(<font color="purple">'-s 3 -t 2 -c %f -p %f -g %f -r %f -h 0 -q'</font>, C, epsl, gamma, coef0);
+                    <font color="blue">case</font> <font color="purple">"pre"</font>
+                            opt =  sprintf(<font color="purple">'-s 3 -t 4 -c %f -p %f -h 0 -q'</font>, C, epsl);
+                <font color="blue">end</font>
+            <font color="blue">end</font>
+    <div style="width:1050px; height:1px; margin:0px auto; padding:0px; background-color: #D5D5D5; overflow: hidden;"></div><b><font color="green">%% Initialization </font>
+            tt = tic;
+
+            [m,n]= size(X0);    em = ones(m,1);
+
+            <font color="blue">switch</font> BM
+                <font color="blue">case</font> {0,1,3} <font color="green">% ppd 122b</font>
+                    wbk = zeros(n+1,1);
+                <font color="blue">case</font> {2,4} <font color="green">% pd 0b</font>
+                    wbk = zeros(n,1);
+                <font color="blue">case</font> 5 <font color="green">% nonlinear</font>
+                    zm1 = zeros(m+1,1);    aabk = zm1;
+            <font color="blue">end</font>
+            aerr = em;
+    <div style="width:1050px; height:1px; margin:0px auto; padding:0px; background-color: #D5D5D5; overflow: hidden;"></div><b><font color="green">%% Liblinear/Libsvm-based iter </font>
+             <font color="blue">for</font> iter = 1 : 100
+                id_le = aerr <= mu;
+
+                <font color="blue">if</font> iter==1, wks=logical(em); <font color="blue">else</font>, wks=id_le; <font color="blue">end</font> <font color="green">% Good init</font>
+                <font color="blue">if</font> min(aerr)>mu, wks=aerr<=prctile(aerr,50); <font color="blue">end</font>
+                X = X0(wks,:);    Y = Y0(wks);
+
+                model = BMFun_trn( Y , X , opt );
+                aerr = abs( Y0 - BMFun_prd(em, X0, model, <font color="purple">'-q'</font>) );
+
+                <font color="blue">if</font> BM == 5
+                    aab = zm1;
+                    tmp = zeros(length(Y),1);
+                    tmp(model.sv_indices) = model.sv_coef;
+                    aab(wks) = tmp;
+                    idsv = aab~=0;
+                    aab(end) = -model.rho;
+                <font color="blue">else</font>
+                    wb = model.w';
+                <font color="blue">end</font>
+
+                <font color="blue">if</font> BM == 5
+                    <font color="blue">if</font> norm(aabk - aab)/norm(aab) < 1e-6, <font color="blue">break</font>, <font color="blue">end</font>
+                    aabk = aab;
+                <font color="blue">else</font>
+                    <font color="blue">if</font> norm(wbk - wb)/norm(wb) < 1e-3, <font color="blue">break</font>, <font color="blue">end</font>
+                    wbk = wb;
+                <font color="blue">end</font>
+
+             <font color="blue">end</font>
+             tr_time = toc(tt);
+    <div style="width:1050px; height:1px; margin:0px auto; padding:0px; background-color: #D5D5D5; overflow: hidden;"></div><b><font color="green">%% Prediction & Output  </font>
+             ValX = sparse(ValX);     [mv,~] = size(ValX);
+             [PredictY,~,~] = BMFun_prd(ones(mv,1), ValX, model, <font color="purple">'-q'</font>);
+
+             <font color="blue">switch</font> BM
+                <font color="blue">case</font> {0,1,3}
+                    model.b = model.w(end);
+                    model.w = model.w(1:end-1)'; <font color="green">% -B: w=[weight;bias]</font>
+                    model.n_SV = -1;
+                <font color="blue">case</font> 5
+                    model.w = model.SVs' * model.sv_coef ;
+                    model.b = -model.rho;
+                    model.n_SV = model.totalSV;
+                    model.ind_SV = idsv;
+                <font color="blue">case</font> {2,4}
+                    model.b = 0;
+                    model.w = model.w'; <font color="green">% -B: w=[weight;bias]</font>
+                    model.n_SV = -1;
+             <font color="blue">end</font>
+             model.tr_time = tr_time;
+             model.n_iter = iter;
+             model.n_wks = sum(wks); <font color="green">% working set final round</font>
+
+        <b><font color="blue">end</font></b>
+    </b>
+
+    </div>
+    <h5><font face="Times New Roman" size="4"><b>Contacts</b></font></h5>
+    <hr />
+    <br />
+    <p style="font-weight: lighter;">Any question or advice please email to <a href="http://www.optimal-group.org/member/hlw.html">Ling-Wei Huang</a> (<a href="mailto:xhuanglw@163.com">xhuanglw@163.com</a>). </p>
+
+    <hr />
+    <p><ul><li style="font-weight: lighter;">Last updated: Apr 14, 2024.</p>
+
+
+    <br />
+    <br />
+
+    <div class="rssfeed">
+    </div>
+
+</div>
+
+</div>
+
+</body>
+</html>
