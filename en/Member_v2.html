@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1400, initial-scale=1.0, user-scalable=no">
+    <title>Members - OPTIMAL Group</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #333333;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        .nav-content {
+            width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-logo {
+            margin-right: 2rem;
+        }
+
+        .nav-logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #666666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            padding: 10px 30px;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            color: #8a2be2;
+            background: rgba(138, 43, 226, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 20px;
+            color: #666666;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            transform: none;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switch a {
+            padding: 5px 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .language-switch a:hover {
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        .language-switch a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+            border-color: #8a2be2;
+        }
+
+        @media (max-width: 1450px) {
+            .language-switch {
+                top: 1rem;
+                right: calc(50% - 600px + 2rem);
+            }
+        }
+
+        @media (max-width: 1280px) {
+            .language-switch {
+                top: 0.5rem;
+                right: calc(50% - 500px + 1rem);
+            }
+            
+            .nav-content {
+                width: 1000px;
+            }
+            
+            .container {
+                width: 960px;
+            }
+        }
+
+        @media (max-width: 1050px) {
+            .language-switch {
+                top: 0.5rem;
+                right: calc(50% - 400px + 1rem);
+            }
+            
+            .nav-content {
+                width: 800px;
+            }
+            
+            .container {
+                width: 760px;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                padding: 10px 25px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .language-switch {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-top: 10px;
+                justify-content: center;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+            
+            .container {
+                width: 100%;
+                padding: 60px 10px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 36px;
+            background: linear-gradient(180deg, #8a2be2, #da70d6);
+            border-radius: 3px;
+        }
+
+        .section-desc {
+            color: #666666;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .member-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.6s ease 0.2s both;
+            cursor: pointer;
+        }
+
+        .member-card:hover {
+            transform: translateY(-3px);
+            border-color: #8a2be2;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.15);
+        }
+
+        .member-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8a2be2 0%, #da70d6 100%);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .member-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 6px;
+        }
+
+        .member-name-en {
+            font-size: 12px;
+            color: #999999;
+            margin-bottom: 10px;
+        }
+
+        .graduates-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .graduate-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .graduate-item:hover {
+            background: rgba(138, 43, 226, 0.05);
+            border-color: #8a2be2;
+        }
+
+        .graduate-info {
+            flex: 1;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .graduate-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+            width: 150px;
+            flex-shrink: 0;
+        }
+
+        .graduate-details {
+            display: flex;
+            gap: 40px;
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .graduate-details span {
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .graduate-details span:nth-child(1) {
+            width: 150px;
+        }
+
+        .graduate-details span:nth-child(2) {
+            width: 120px;
+        }
+
+        .graduate-details span:nth-child(3) {
+            width: 350px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer p {
+            color: #999999;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 28px;
+            }
+
+            .members-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .nav-item {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .language-switch {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-top: 10px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="language-switch">
+            <a href="Member_v2.html" class="active">English</a>
+            <a href="../zh/Member_v2.html">中文</a>
+        </div>
+        <div class="nav-content">
+            <div class="nav-logo">
+                <a href="index_v2.html">
+                    <img src="../images/Optimal1.jpg" alt="OPTIMAL Group Logo" width="40px">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index_v2.html">Home</a></li>
+                <li><a href="Member_v2.html" class="active">Members</a></li>
+                <li class="dropdown">
+                    <a href="#">Achievements</a>
+                    <div class="dropdown-content">
+                        <a href="Publication_v2.html">Publications</a>
+                        <a href="Project_v2.html">Projects</a>
+                        <a href="Books_v2.html">Books</a>
+                        <a href="Patents_v2.html">Patents</a>
+                    </div>
+                </li>
+                <li><a href="Resource_v2.html">Resources</a></li>
+                <li><a href="Resource_v2.html">Predicate Library</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Faculty</h2>
+                <p class="section-desc">Our esteemed faculty members</p>
+            </div>
+            <div class="members-grid">
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🏫</div>
+                        <div class="member-name">Lan Bai</div>
+                        <div class="member-name-en">白兰</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">Wei-Jie Chen</div>
+                        <div class="member-name-en">陈伟杰</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">Nai-Yang Deng</div>
+                        <div class="member-name-en">邓乃扬</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🏫</div>
+                        <div class="member-name">Chun-Na Li</div>
+                        <div class="member-name-en">李春娜</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">Ming-Zeng Liu</div>
+                        <div class="member-name-en">刘明增</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">Yuan-Hai Shao</div>
+                        <div class="member-name-en">邵元海</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">Zhen Wang</div>
+                        <div class="member-name-en">王震</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🏫</div>
+                        <div class="member-name">Ya-Fen Ye</div>
+                        <div class="member-name-en">叶娅芬</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Doctoral Students</h2>
+                <p class="section-desc">Our PhD candidates</p>
+            </div>
+            <div class="members-grid">
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Xiang-Yu Hua</div>
+                        <div class="member-name-en">化祥雨</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Ju Liu</div>
+                        <div class="member-name-en">刘锯</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Tian Liu</div>
+                        <div class="member-name-en">刘天</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Xiao-Jing Lv</div>
+                        <div class="member-name-en">吕孝敬</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Yi-Fan Qi</div>
+                        <div class="member-name-en">齐一帆</div>
+                    </div>
+                </a>
+                <a href="../member_en/syw_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Wei-Yi Song</div>
+                        <div class="member-name-en">宋祎玮</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Master Students</h2>
+                <!-- <p class="section-desc">Our graduate students</p> -->
+            </div>
+            <div class="members-grid">
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Yi-Wen Gao</div>
+                        <div class="member-name-en">高怡雯</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🎓</div>
+                        <div class="member-name">Yan-Ru Guo</div>
+                        <div class="member-name-en">郭艳茹</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Ling-Wei Huang</div>
+                        <div class="member-name-en">黄凌伟</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Wen Jia</div>
+                        <div class="member-name-en">贾雯</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Jun-Jie Liang</div>
+                        <div class="member-name-en">梁俊杰</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Hao Su</div>
+                        <div class="member-name-en">苏豪</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Xiao-Yan Tan</div>
+                        <div class="member-name-en">谭晓艳</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Jing-Ming Xiong</div>
+                        <div class="member-name-en">熊靖明</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🎓</div>
+                        <div class="member-name">Can Wu</div>
+                        <div class="member-name-en">吴灿</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Hai-Lan Zhang</div>
+                        <div class="member-name-en">张海兰</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Zhen-Rong Zheng</div>
+                        <div class="member-name-en">郑增荣</div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">Dai-Dai Zhou</div>
+                        <div class="member-name-en">周黛黛</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Alumns</h2>
+                <!-- <p class="section-desc">Our PhD candidates</p> -->
+            </div>
+            <div class="graduates-list">
+                <!-- 2025 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Yi-Chen Li</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2025</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: China Construction Bank</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Xue-Qing Yan</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2025</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Suzhou Middle School Affiliated Sanya School, Teacher</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Yu Wang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2025</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: China Telecom Hainan Branch</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2024 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Ling-Wei Huang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2024</span>
+                                <span>PhD Graduate</span>
+                                <span>Destination: Hainan University, Teacher</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Wen-Zheng Liu</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2024</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Company</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Jun-Shan Yin</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2024</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Southern University of Science and Technology, PhD Student</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Wen-Zhe Shao</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2024</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Nanjing University of Science and Technology, PhD Student</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Shuai Wang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2024</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Northwestern Polytechnical University, PhD Student</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Fang-Xing Yu</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2024</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Hainan Provincial Civil Servant</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Ya-Nan Zhang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2024</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: China Telecom Shenzhen Branch</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Ting-Ting Zhuang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2024</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Middle School Teacher</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2023 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Yi Li</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2023</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Hainan University, PhD Student</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Zhen-Qi Liu</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2023</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Inner Mongolia Institute of Technology, Teacher</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Pei-Wei Ren</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2023</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Company</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Jin-Sheng Yang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2023</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Sun Yat-sen University, PhD Student</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Meng-Xian Zhuang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2023</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Company</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2022 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Ben Guo</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2022</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Hebei Provincial Civil Servant</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Yang He</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2022</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: China Guangfa Bank</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2021 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Jia-Ying Teng</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2021</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: China Guangfa Bank</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Yu-Ting Zhao</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2021</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: China Merchants Bank</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2020 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Jun Zhang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2020</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: CATL, Algorithm Engineer</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2019 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Yi-Yao Hu</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2019</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: -</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Kai-Li Yang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2019</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Zhejiang Shaoxing Vocational College, Teacher</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2018 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Hua-Xin Pei</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2018</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Dong'e Ejiao Co., Ltd., Data Researcher</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Chen Wang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2018</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Zhejiang浙大中控信息技术有限公司, Algorithm Engineer</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2017 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Tian-Tian Wang</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2017</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Hangzhou Ruipu Gene Technology Co., Ltd., Bioinformatics Big Data Statistician</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2016 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">He-Ji Wu</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2016</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Erweihuo Co., Ltd., Data Mining Engineer</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2015 Graduates -->
+                <a href="../maintenance_en.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">Yan-Ru Guo</div>
+                            <div class="graduate-details">
+                                <span>Graduation Year: 2015</span>
+                                <span>Master Graduate</span>
+                                <span>Destination: Zhejiang University of Technology Zhijiang College, Teacher</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 OPTIMAL Group. All rights reserved.</p>
+        <p id="page-views" style="margin-top: 10px; font-size: 12px; color: #999;">Page views: 0</p>
+    </footer>
+    
+    <script>
+        // Page views counter
+        function updatePageViews() {
+            // Get current views from local storage
+            let views = localStorage.getItem('page_views_member_en') || 0;
+            views = parseInt(views) + 1;
+            // Save updated views
+            localStorage.setItem('page_views_member_en', views);
+            // Update page display
+            document.getElementById('page-views').textContent = `Page views: ${views}`;
+        }
+        
+        // Update views when page loads
+        window.onload = updatePageViews;
+    </script>
+</body>
+</html>

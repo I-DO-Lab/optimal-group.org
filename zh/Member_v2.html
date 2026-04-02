@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1400, initial-scale=1.0, user-scalable=no">
+    <title>成员 - OPTIMAL 研究组</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #333333;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        .nav-content {
+            width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-logo {
+            margin-right: 2rem;
+        }
+
+        .nav-logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #666666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            padding: 12px 40px;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            color: #8a2be2;
+            background: rgba(138, 43, 226, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 20px;
+            color: #666666;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            transform: none;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switch a {
+            padding: 5px 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .language-switch a:hover {
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        .language-switch a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+            border-color: #8a2be2;
+        }
+
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 36px;
+            background: linear-gradient(180deg, #8a2be2, #da70d6);
+            border-radius: 3px;
+        }
+
+        .section-desc {
+            color: #666666;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .member-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.6s ease 0.2s both;
+            cursor: pointer;
+        }
+
+        .member-card:hover {
+            transform: translateY(-3px);
+            border-color: #8a2be2;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.15);
+        }
+
+        .member-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8a2be2 0%, #da70d6 100%);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .member-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 6px;
+        }
+
+        .member-name-en {
+            font-size: 12px;
+            color: #999999;
+            margin-bottom: 10px;
+        }
+
+        .graduates-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .graduate-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .graduate-item:hover {
+            background: rgba(138, 43, 226, 0.05);
+            border-color: #8a2be2;
+        }
+
+        .graduate-info {
+            flex: 1;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .graduate-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+            width: 100px;
+            flex-shrink: 0;
+        }
+
+        .graduate-details {
+            display: flex;
+            gap: 40px;
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .graduate-details span {
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .graduate-details span:nth-child(1) {
+            width: 120px;
+        }
+
+        .graduate-details span:nth-child(2) {
+            width: 120px;
+        }
+
+        .graduate-details span:nth-child(3) {
+            width: 300px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer p {
+            color: #999999;
+            font-size: 14px;
+        }
+
+        @media (max-width: 1450px) {
+            .language-switch {
+                top: 1rem;
+                right: calc(50% - 600px + 2rem);
+            }
+        }
+
+        @media (max-width: 1280px) {
+            .language-switch {
+                top: 0.5rem;
+                right: calc(50% - 500px + 1rem);
+            }
+            
+            .nav-content {
+                width: 1000px;
+            }
+            
+            .container {
+                width: 960px;
+            }
+        }
+
+        @media (max-width: 1050px) {
+            .language-switch {
+                top: 0.5rem;
+                right: calc(50% - 400px + 1rem);
+            }
+            
+            .nav-content {
+                width: 800px;
+            }
+            
+            .container {
+                width: 760px;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                padding: 10px 25px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .language-switch {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-top: 10px;
+                justify-content: center;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+            
+            .container {
+                width: 100%;
+                padding: 60px 10px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .members-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="language-switch">
+                <a href="../maintenance_en.html">English</a>
+                <a href="Member_v2.html" class="active">中文</a>
+            </div>
+            <div class="nav-content">
+                <div class="nav-logo">
+                    <a href="../index.html">
+                        <img src="../images/Optimal1.jpg" alt="OPTIMAL Group Logo" width="40px">
+                    </a>
+                </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="Member_v2.html" class="active">成员</a></li>
+                <li class="dropdown">
+                    <a href="#">成果</a>
+                    <div class="dropdown-content">
+                        <a href="Publication_v2.html">论文</a>
+                        <a href="Project_v2.html">项目</a>
+                        <a href="Books_v2.html">著作</a>
+                        <a href="Patents_v2.html">专利</a>
+                    </div>
+                </li>
+                <li><a href="Resource_v2.html">资源</a></li>
+                <li><a href="Resource_v2.html">谓词库</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">教师</h2>
+            </div>
+            <div class="members-grid">
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🏫</div>
+                        <div class="member-name">白兰</div>
+                        <div class="member-name-en">Lan Bai</div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">陈伟杰</div>
+                        <div class="member-name-en">Wei-Jie Chen</div>
+                    </div>
+                </a>
+                <!-- <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">邓乃扬</div>
+                        <div class="member-name-en">Nai-Yang Deng</div>
+                    </div>
+                </a> -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🎓</div>
+                        <div class="member-name">郭艳茹</div>
+                        <div class="member-name-en">Yan-Ru Guo</div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">化祥雨</div>
+                        <div class="member-name-en">Xiang-Yu Hua</div>
+                    </div>
+                </a>
+                <a href="../member_zh/hlw_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">黄凌伟</div>
+                        <div class="member-name-en">Ling-Wei Huang</div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🏫</div>
+                        <div class="member-name">李春娜</div>
+                        <div class="member-name-en">Chun-Na Li</div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">刘明增</div>
+                        <div class="member-name-en">Ming-Zeng Liu</div>
+                    </div>
+                </a>
+                <a href="../member_zh/syh_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">邵元海</div>
+                        <div class="member-name-en">Yuan-Hai Shao</div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">田晓云</div>
+                        <div class="member-name-en">Xiao-Yun Tian</div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🏫</div>
+                        <div class="member-name">王震</div>
+                        <div class="member-name-en">Zhen Wang</div>
+                    </div>
+                </a>
+                <a href="../member_zh/wc_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🎓</div>
+                        <div class="member-name">吴灿</div>
+                        <div class="member-name-en">Can Wu</div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🏫</div>
+                        <div class="member-name">叶娅芬</div>
+                        <div class="member-name-en">Ya-Fen Ye</div>
+                    </div>
+                </a>
+                <!-- <a href="../member_zh/gyr.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👩‍🎓</div>
+                        <div class="member-name">田晓云</div>
+                        <div class="member-name-en">Xiao-Yun Tian</div>
+                    </div>
+                </a> -->
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">博士研究生</h2>
+            </div>
+            <div class="members-grid">
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">刘锯</div>
+                        <div class="member-name-en">Ju Liu</div>
+                    </div>
+                </a>
+                <a href="../member_zh/lt_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">刘天</div>
+                        <div class="member-name-en">Tian Liu</div>
+                    </div>
+                </a>
+                <a href="../member_zh/lxj_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">吕孝敬</div>
+                        <div class="member-name-en">Xiao-Jing Lv</div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">齐一帆</div>
+                        <div class="member-name-en">Yi-Fan Qi</div>
+                    </div>
+                </a>
+                <a href="../member_zh/syw_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">宋祎玮</div>
+                        <div class="member-name-en">Wei-Yi Song</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">硕士研究生</h2>
+                <!-- <p class="section-desc">我们的研究生</p> -->
+            </div>
+            <div class="members-grid">
+                <a href="../member_zh/gyw_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">高怡雯</div>
+                        <div class="member-name-en">Yi-Wen Gao</div>
+                    </div>
+                </a>
+                <a href="../member_zh/jw_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">贾雯</div>
+                        <div class="member-name-en">Wen Jia</div>
+                    </div>
+                </a>
+                <a href="../member_zh/ljj_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">梁俊杰</div>
+                        <div class="member-name-en">Jun-Jie Liang</div>
+                    </div>
+                </a>
+                <a href="../member_zh/sh_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">苏豪</div>
+                        <div class="member-name-en">Hao Su</div>
+                    </div>
+                </a>
+                <a href="../member_zh/txy_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">谭晓艳</div>
+                        <div class="member-name-en">Xiao-Yan Tan</div>
+                    </div>
+                </a>
+                <a href="../member_zh/xjm_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">熊靖明</div>
+                        <div class="member-name-en">Jing-Ming Xiong</div>
+                    </div>
+                </a>
+                <a href="../member_zh/zhl_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">张海兰</div>
+                        <div class="member-name-en">Hai-Lan Zhang</div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">郑增荣</div>
+                        <div class="member-name-en">Zhen-Rong Zheng</div>
+                    </div>
+                </a>
+                <a href="../member_zh/zdd_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="member-card">
+                        <div class="member-avatar">👨‍🎓</div>
+                        <div class="member-name">周黛黛</div>
+                        <div class="member-name-en">Dai-Dai Zhou</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">毕业生</h2>
+                <!-- <p class="section-desc">Our PhD candidates</p> -->
+            </div>
+            <div class="graduates-list">
+                <!-- 2025年毕业生 -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">力翼琛</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2025</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：中国建设银行</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../member_zh/syw_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">宋祎玮</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2025</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：海南大学，博士研究生</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">王豫</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2025</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：中国电信股份有限公司海南分公司</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">颜雪芹</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2025</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：苏州中学附属三亚学校，教师</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2024年毕业生 -->
+                <a href="../member_zh/hlw_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">黄凌伟</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2024</span>
+                                <span>博士研究生毕业</span>
+                                <span>现在：海南大学，教师</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">刘文正</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2024</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：企业</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">邵文哲</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2024</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：南京理工大学，博士研究生</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">王帅</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2024</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：西北工业大学，博士研究生</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">殷俊山</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2024</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：南方科技大学，博士研究生</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">于发星</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2024</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：海南省公务员</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">张亚楠</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2024</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：中国电信股份有限公司深圳分公司</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">朱婷婷</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2024</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：邯郸市第二实验小学，教师</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2023年毕业生 -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">李仪</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2023</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：海南大学博士研究生</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../member_zh/lxj_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">吕孝敬</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2023</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：海南大学，博士研究生</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">刘珍琪</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2023</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：内蒙古科技学院，教师</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">任沛威</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2023</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：南京国电环保科技有限公司</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">杨金升</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2023</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：中山大学，博士研究生</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">朱梦娴</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2023</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：万兴科技集团股份有限公司</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2022年毕业生 -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">郭犇</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2022</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：河北省公务员</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">何洋</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2022</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：广发银行</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">齐一帆</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2022</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：海南大学，博士研究生</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2021年毕业生 -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">滕佳颖</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2021</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：广发银行</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">赵雨婷</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2021</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：招商银行</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2020年毕业生 -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">张军</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2020</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：宁德时代，算法工程师</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2019年毕业生 -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">胡亦尧</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2019</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：-</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">杨凯丽</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2019</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：浙江绍兴高职院校，教师</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2018年毕业生 -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">裴华欣</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2018</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：东阿阿胶股份有限公司，数据研究员</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="../member_zh/wc_zh.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">王晨</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2018</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：浙江浙大中控信息技术有限公司，算法工程师</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2017年毕业生 -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">王甜甜</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2017</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：杭州瑞普基因科技有限公司，生物信息大数据统计研究员</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2016年毕业生 -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">吴和吉</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2016</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：二维火有限公司，数据挖掘工程师</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 2015年毕业生 -->
+                <a href="../maintenance.html" style="text-decoration: none; color: inherit;">
+                    <div class="graduate-item">
+                        <div class="graduate-info">
+                            <div class="graduate-name">郭艳茹</div>
+                            <div class="graduate-details">
+                                <span>毕业年份：2015</span>
+                                <span>硕士研究生毕业</span>
+                                <span>现在：浙江工业大学之江学院，教师</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 OPTIMAL Group. 保留所有权利。</p>
+        <p id="page-views" style="margin-top: 10px; font-size: 12px; color: #999;">页面访问次数：0</p>
+    </footer>
+    
+    <script>
+        // 页面访问次数统计
+        function updatePageViews() {
+            // 从本地存储获取当前访问次数
+            let views = localStorage.getItem('page_views_member_zh') || 0;
+            views = parseInt(views) + 1;
+            // 保存更新后的访问次数
+            localStorage.setItem('page_views_member_zh', views);
+            // 更新页面显示
+            document.getElementById('page-views').textContent = `页面访问次数：${views}`;
+        }
+        
+        // 页面加载时更新访问次数
+        window.onload = updatePageViews;
+    </script>
+</body>
+</html>

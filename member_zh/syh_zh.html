@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1400, initial-scale=1.0, user-scalable=no">
+    <title>邵元海的个人主页</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Microsoft YaHei", "微软雅黑", sans-serif; background-color: #f5f5f5; color: #2d2d2d; line-height: 1.7; overflow-x: auto; display: flex; flex-direction: column; min-height: 100vh;}
+        a { color: #8a2be2; text-decoration: none; transition: color 0.3s; }
+        a:hover { color: #6a0dad; text-decoration: underline; }
+        .nav-container { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(168, 85, 247, 0.1); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+        .nav-content { width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: center; align-items: center; }
+        .nav-logo { margin-right: 2rem; }
+        .nav-logo img { height: 60px; width: auto; transition: transform 0.3s ease; }
+        .nav-logo img:hover { transform: scale(1.05) rotate(5deg); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links li { position: relative; }
+        .nav-links a { color: #666666; text-decoration: none; font-weight: 500; font-size: 20px; transition: all 0.3s ease; padding: 12px 40px; border-radius: 25px; }
+        .nav-links a:hover { color: #8a2be2; background: rgba(138, 43, 226, 0.1); transform: translateY(-2px); }
+        .nav-links a.active { background: linear-gradient(90deg, #8a2be2, #da70d6); color: #ffffff; }
+        .language-switch { position: absolute; top: 1rem; right: calc(50% - 700px + 2rem); display: flex; gap: 10px; }
+        .language-switch a { padding: 5px 15px; border: 1px solid rgba(138, 43, 226, 0.3); border-radius: 20px; text-decoration: none; font-size: 14px; transition: all 0.3s ease; }
+        .language-switch a:hover { background: rgba(138, 43, 226, 0.1); }
+        .language-switch a.active { background: linear-gradient(90deg, #8a2be2, #da70d6); color: #ffffff; border-color: #8a2be2; }
+        .dropdown { position: relative; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 0; background: #ffffff; min-width: 200px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); border-radius: 8px; padding: 10px 0; z-index: 1000; border: 1px solid rgba(138, 43, 226, 0.1); }
+        .dropdown:hover .dropdown-content { display: block; animation: fadeInUp 0.3s ease; }
+        .dropdown-content a { display: block; padding: 10px 20px; color: #666666; text-decoration: none; font-size: 16px; border-radius: 0; transition: all 0.3s ease; }
+        .dropdown-content a:hover { background: rgba(138, 43, 226, 0.1); color: #8a2be2; transform: none; }
+        .container { width: 1200px; margin: 0 auto; padding: 0; display: flex; min-height: calc(100vh - 100px); }
+        .left-section { width: 350px; background: white; padding: 40px 30px; border-right: 1px solid #e0e0e0; position: sticky; top: 0; height: 100vh; overflow-y: auto; box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05); }
+        .profile-photo { width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, #8a2be2 0%, #da70d6 100%); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 48px; color: white; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3); }
+        .profile-name { font-size: 24px; font-weight: 700; color: #333; text-align: center; margin-bottom: 5px; }
+        .profile-name-en { font-size: 14px; color: #666; text-align: center; margin-bottom: 30px; }
+        .contact-info { margin-bottom: 30px; }
+        .contact-item { display: flex; align-items: center; margin-bottom: 15px; font-size: 14px; }
+        .contact-icon { width: 20px; margin-right: 10px; text-align: center; color: #8a2be2; }
+        .social-links { margin-top: 20px; }
+        .social-link { display: block; padding: 8px 15px; margin-bottom: 10px; background: rgba(138, 43, 226, 0.1); color: #8a2be2; border-radius: 20px; font-size: 14px; text-align: center; transition: all 0.3s; border: 1px solid rgba(138, 43, 226, 0.2); }
+        .social-link:hover { background: rgba(138, 43, 226, 0.15); transform: translateY(-2px); text-decoration: none; }
+        .right-section { flex: 1; padding: 40px; background: white; overflow-y: auto; min-height: 100vh; }
+        .section { margin-bottom: 30px; }
+        .section-title { font-size: 24px; font-weight: 700; color: #333; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid #8a2be2; }
+        .timeline-item { margin-bottom: 25px; }
+        .timeline-title { font-size: 18px; font-weight: 600; color: #8a2be2; margin-bottom: 5px; }
+        .timeline-organization { font-size: 16px; color: #666; margin-bottom: 10px; }
+        .timeline-description { font-size: 15px; color: #555; line-height: 1.6; }
+        .go-top { position: fixed; bottom: 30px; right: 30px; background: linear-gradient(90deg, #8a2be2, #da70d6); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 2px 10px rgba(138, 43, 226, 0.3); transition: all 0.3s; }
+        .go-top:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4); text-decoration: none; }
+        .footer { background: #f8f9fa; border-top: 1px solid #e0e0e0; padding: 30px; text-align: center; color: #666; font-size: 14px; margin-top: auto; }
+    </style>
+</head>
+<body>
+    <div style="background: #ffffff; border-bottom: 1px solid #e0e0e0; padding: 10px 0;">
+        <div style="width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 30px; padding: 0 20px;">
+            <a href="../index.html" style="display: inline-block;"><img src="../Image/Optimal_img.jpg" alt="OPTIMAL Group Logo" width="300px" style="cursor: pointer;"></a>
+            <div style="text-align: center; flex: 1;">
+                <h1 style="margin: 0; font-size: 24px; font-weight: 700; background: linear-gradient(90deg, #8a2be2, #da70d6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">OPTimization for Intellegent MAchine Learning</h1>
+            </div>
+            <div class="language-switch" style="position: static;">
+                <a href="../maintenance_en.html">English</a>
+                <a href="syh_zh.html" class="active">中文</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="left-section">
+            <div class="profile-photo" style="background: #f0f0f0;">
+                <!-- 请将 src 替换为个人照片路径，如：src="../PersonalPicture/syh.jpg" -->
+                <img src="../people_images/syh.png" alt="邵元海照片" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            </div>
+            <h1 class="profile-name">邵元海</h1>
+            <p class="profile-name-en">Yuan-Hai Shao</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>教授，OPTIMAL Group 负责人</span>
+                </div>
+                <div class="contact-item">
+                    <span>邮箱：<a href="mailto:shaoyuanhai@hainanu.edu.cn">shaoyuanhai@hainanu.edu.cn</a></span>
+                </div>
+                <div class="contact-item">
+                    <span>专业：数学与人工智能</span>
+                </div>
+                <div class="contact-item">
+                    <span>方向：完备统计学习理论、模型、算法与应用，最优化方法及应用</span>
+                </div>
+                <div class="contact-item">
+                    <span>导师：邓乃扬教授</span>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://scholar.google.com.hk/citations?user=igq6aFkAAAAJ&hl=zh-CN&oi=ao" class="social-link" target="_blank">Google Scholar</a>
+                <!-- GitHub 信息为空 -->
+                <a href="#" class="social-link">GitHub</a>
+                <a href="https://orcid.org/0000-0002-1628-6133" class="social-link" target="_blank">ORCID</a>
+            </div>
+        </div>
+        
+        <div class="right-section">
+            <div class="section">
+                <h2 class="section-title">个人简介</h2>
+                <div class="timeline-item" style="text-align: justify; text-indent: 2em;">
+                    邵元海，海南大学数学与统计学院教授，博士毕业于中国农业大学，师从邓乃扬教授，后分别就职于浙江工业大学和海南大学。长期从事机器学习、最优化方法及应用工作。至今已主持国家级科研项目5项，国家授权发明专利5项，已发表SCI收录科研论文100余篇，论文引用率5500余次，2020-2025年入选Elsevier中国高被引学者榜单，担任《Neural Networks》期刊编委等。2011年组建了OPTIMAL (Optimization for Intelligent Machine Learning.)科研团队(主页：https://i-do-lab.site/ )，团队致力于研究智能机器学习的理论、模型、算法和应用。
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">教育背景</h2>
+                <div class="timeline-item">
+                    <div class="timeline-title">2008年9月-2011年6月，管理学博士</div>
+                    <div class="timeline-organization">中国农业大学，运筹与管理专业</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">2006年9月-2008年6月，理学硕士</div>
+                    <div class="timeline-organization">中国农业大学，应用数学专业</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">2002年9月-2006年6月，理学学士</div>
+                    <div class="timeline-organization">吉林大学，信息与计算科学专业</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">工作经历</h2>
+                <div class="timeline-item">
+                    <div class="timeline-title">2017.09-至今，副教授/教授</div>
+                    <div class="timeline-organization">海南大学，数学与统计学院</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">2011.07-2017.8，讲师/副教授</div>
+                    <div class="timeline-organization">浙江工业大学 之江学院</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">科研成果 (部分)</h2>
+                <ol style="list-style-type: decimal; padding-left: 30px; margin: 0; text-align: justify">
+                    <li style="margin-bottom: 20px;">Chun-Na Li, Yiwei Song, <strong>Yuan-Hai Shao</strong>. Domain Adaptation via Learning Using Statistical Invariant. IEEE Transactions on Knowledge and Data Engineering, 2025, 37(7): 4023-4034.</li>
+                    <li style="margin-bottom: 20px;">Ling-Wei Huang, <strong>Yuan-Hai Shao</strong>, Xiao-Jing Lv, Chun-Na Li. Large-scale robust regression with truncated loss via majorization-minimization algorithm. European Journal of Operational Research, 2024, 319(2): 494-504.</li>
+                    <li style="margin-bottom: 20px;">Zhen Wang, Lan Bai, <strong>Yuan-Hai Shao*</strong>. Generalization Memorization Machine with zero empirical risk for classification. Pattern Recognition, 2024, 110469.</li>
+                    <li style="margin-bottom: 20px;">Huajun Wang, <strong>Yuan-Hai Shao</strong>, Shenglong Zhou, Ce Zhang, Naihua Xiu*. Support Vector Machine Classifier via L0/1 Soft-Margin Loss. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2022, 44(10): 7253-7265.</li>
+                    <li style="margin-bottom: 20px;">Zhen Wang, <strong>Yuan-Hai Shao*</strong>, Lan Bai, Chun-Na Li, Li-Ming Liu. General Plane-Based Clustering With Distribution Loss. IEEE Transactions on Neural Networks and Learning Systems, 2020, 32(9): 3880-3893.</li>
+                    <li style="margin-bottom: 20px;">邵元海，刘黎明，黄凌伟，邓乃扬 *. 支持向量机的关键问题和展望。中国科学：数学，2020, 50 (9): 1233-1248.</li>
+                    <li style="margin-bottom: 20px;"><strong>Yuan-Hai Shao</strong>, Chun-Na Li, Ling-Wei Huang, Zhen Wang, Nai-Yang Deng, Yan Xu. Joint sample and feature selection via sparse primal and dual LSSVM. Knowledge-Based Systems, 2019, 185: 1-8.</li>
+                    <li style="margin-bottom: 20px;"><strong>Yuan-Hai Shao</strong>, Nai-Yang Deng*. The equivalence between principal component analysis and nearest flat in the least square sense. Journal of Optimization Theory and Applications, 2015, 166(1): 278-284.</li>
+                    <li style="margin-bottom: 20px;">Zhen Wang*, <strong>Yuan-Hai Shao*</strong>, Lan Bai, Nai-Yang Deng. Twin Support Vector Machine for Clustering. IEEE Transactions on Neural Networks and Learning Systems, 2015, 26(10): 2583-2588.</li>
+                    <li style="margin-bottom: 20px;"><strong>Yuan-Hai Shao</strong>, Chun-Hua Zhang, Xiao-Bo Wang, Nai-Yang Deng*. Improvements on Twin Support Vector Machines. IEEE Transactions on Neural Networks, 2011: 962-968.</li>
+                </ol>
+            </div>
+            
+            <!-- 项目课题在表格中未提供，故省略此板块 -->
+            <!--
+            <div class="section">
+                <h2 class="section-title">项目课题</h2>
+                ...
+            </div>
+            -->
+
+            <!-- 荣誉奖励在表格中未提供，故省略此板块 -->
+            <!--
+            <div class="section">
+                <h2 class="section-title">荣誉奖励</h2>
+                ...
+            </div>
+            -->
+        </div>
+    </div>
+
+    <a href="#" class="go-top">↑</a>
+
+    <div class="footer">
+        <p>© 2024 OPTIMAL Group. 保留所有权利。 | 最后更新：2026年4月2日</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1400, initial-scale=1.0, user-scalable=no">
+    <title>Activities Album - Optimal Group</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" media="screen"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #4a2c6a 100%);
+            color: #ffffff;
+            overflow-x: auto;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        .nav-content {
+            width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-logo {
+            margin-right: 2rem;
+        }
+
+        .nav-logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #666666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            padding: 10px 30px;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            color: #8a2be2;
+            background: rgba(138, 43, 226, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 20px;
+            color: #666666;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            transform: none;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .language-switch a {
+            padding: 5px 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .language-switch a:hover {
+            background: rgba(138, 43, 226, 0.1);
+        }
+        
+        .language-switch a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+            border-color: #8a2be2;
+        }
+
+        .main-content {
+            width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-info {
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .photo-info p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="language-switch">
+            <a href="Activity_v2.html" class="active">English</a>
+            <a href="../zh/Activity_v2.html">中文</a>
+        </div>
+        <div class="nav-content">
+            <div class="nav-logo">
+                <a href="index_v2.html">
+                    <img src="../images/Optimal1.jpg" alt="OPTIMAL Group Logo" width="40px">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index_v2.html">Home</a></li>
+                <li><a href="Member_v2.html">Members</a></li>
+                <li class="dropdown">
+                    <a href="#">Achievements</a>
+                    <div class="dropdown-content">
+                        <a href="Publication_v2.html">Publications</a>
+                        <a href="Project_v2.html">Projects</a>
+                        <a href="Books_v2.html">Books</a>
+                        <a href="Patents_v2.html">Patents</a>
+                    </div>
+                </li>
+                <li><a href="Resource_v2.html">Resources</a></li>
+                <li><a href="../maintenance_en.html">Predicate Library</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Activities Album</h1>
+            <p>Capturing Moments of Our Research Journey</p>
+        </div>
+
+        <div class="album-grid">
+            <div class="photo-card">
+                <img src="../Image/20201017_Hefei.jpg" alt="20201017, Hefei, Anhui.">
+                <div class="photo-info">
+                    <p>20201017, Hefei, Anhui</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/20201017_Hefei1.jpg" alt="20201017, Hefei, Anhui.">
+                <div class="photo-info">
+                    <p>20201017, Hefei, Anhui</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/20201017_Hefei2.jpg" alt="20201017, Hefei, Anhui.">
+                <div class="photo-info">
+                    <p>20201017, Hefei, Anhui</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/20201017_Hefei3.jpg" alt="20201017, Hefei, Anhui.">
+                <div class="photo-info">
+                    <p>20201017, Hefei, Anhui</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/20190112HZ.jpg" alt="20190112, Hangzhou, Zhejiang.">
+                <div class="photo-info">
+                    <p>20190112, Hangzhou, Zhejiang</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/20170514GuiLin.jpg" alt="20170514, GuiLin, Guangxi.">
+                <div class="photo-info">
+                    <p>20170514, Guilin, Guangxi</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201610HangZhou.jpg" alt="201610, HangZhou, Zhejiang.">
+                <div class="photo-info">
+                    <p>201610, Hangzhou, Zhejiang</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201609ShaoXing.jpg" alt="201609, ShaoXing, Zhejiang.">
+                <div class="photo-info">
+                    <p>201609, Shaoxing, Zhejiang</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201602Hangzhou.jpg" alt="201602, Hangzhou, Zhejiang.">
+                <div class="photo-info">
+                    <p>201602, Hangzhou, Zhejiang</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201405Jinhua.jpg" alt="201405, JinHua, Zhejiang.">
+                <div class="photo-info">
+                    <p>201405, Jinhua, Zhejiang</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201311Hangzhou.jpg" alt="201311, HangZhou, Zhejiang.">
+                <div class="photo-info">
+                    <p>201311, Hangzhou, Zhejiang</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201305Suzhou.jpg" alt="201305, Suzhou, Jiangsu.">
+                <div class="photo-info">
+                    <p>201305, Suzhou, Jiangsu</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Optimal Group. All rights reserved.</p>
+        <p id="page-views" style="margin-top: 10px; font-size: 12px; color: rgba(255, 255, 255, 0.5);">Page views: 0</p>
+    </footer>
+    
+    <script>
+        // Page views counter
+        function updatePageViews() {
+            // Get current views from local storage
+            let views = localStorage.getItem('page_views_activity_en') || 0;
+            views = parseInt(views) + 1;
+            // Save updated views
+            localStorage.setItem('page_views_activity_en', views);
+            // Update page display
+            document.getElementById('page-views').textContent = `Page views: ${views}`;
+        }
+        
+        // Update views when page loads
+        window.onload = updatePageViews;
+    </script>
+</body>
+</html>

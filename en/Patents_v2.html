@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1400, initial-scale=1.0, user-scalable=no">
+    <title>Patents - OPTIMAL Group</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #333333;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        .nav-content {
+            width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-logo {
+            margin-right: 2rem;
+        }
+
+        .nav-logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #666666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            padding: 10px 30px;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            color: #8a2be2;
+            background: rgba(138, 43, 226, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 20px;
+            color: #666666;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            transform: none;
+        }
+
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 36px;
+            background: linear-gradient(180deg, #8a2be2, #da70d6);
+            border-radius: 3px;
+        }
+
+        .patent-item {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .patent-item:hover {
+            border-color: #8a2be2;
+            transform: translateX(5px);
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.15);
+        }
+
+        .patent-number {
+            font-size: 14px;
+            color: #8a2be2;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .patent-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .patent-inventors {
+            color: #666666;
+            margin-bottom: 8px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .patent-inventors u {
+            color: #8a2be2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .patent-date {
+            color: #999999;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .patent-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .patent-link {
+            padding: 6px 16px;
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .patent-link:hover {
+            background: rgba(138, 43, 226, 0.15);
+            transform: translateY(-2px);
+            border-color: #8a2be2;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer p {
+            color: #999999;
+            font-size: 14px;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switch a {
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .language-switch a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+            border-color: #8a2be2;
+        }
+
+        .language-switch a:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .language-switch {
+                position: static;
+                margin-top: 10px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="nav-content">
+            <div class="nav-logo">
+                <a href="index_v2.html">
+                    <img src="../Image/Optimal_img.jpg" alt="OPTIMAL Group Logo">
+                </a>
+            </div>
+            <div class="language-switch">
+            <a href="Patents_v2.html" class="active">English</a>
+            <a href="../zh/Patents_v2.html">中文</a>
+        </div>
+            <ul class="nav-links">
+                <li><a href="index_v2.html">Home</a></li>
+                <li><a href="Member_v2.html">Members</a></li>
+                <li class="dropdown">
+                    <a href="#">Research</a>
+                    <div class="dropdown-content">
+                        <a href="Publication_v2.html">Publications</a>
+                        <a href="Project_v2.html">Projects</a>
+                        <a href="Books_v2.html">Books</a>
+                        <a href="Patents_v2.html">Patents</a>
+                    </div>
+                </li>
+                <li><a href="Resource_v2.html">Resources</a></li>
+                <li><a href="../maintenance_en.html">Predicate Library</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="section-header">
+            <h2 class="section-title">Patents</h2>
+            <p style="color: #a0a0a0; margin-left: 20px;">Our intellectual property and patent achievements</p>
+        </div>
+
+        <div class="patent-item">
+            <div class="patent-number">Patent No. ZLXXXXXXXX.X</div>
+            <h3 class="patent-title">Your Patent Title Here</h3>
+            <p class="patent-inventors">Inventor1, Inventor2, <u>Your Name</u></p>
+            <p class="patent-date">Granted Date: Month Year</p>
+            <div class="patent-links">
+                <a href="#" class="patent-link">Details</a>
+                <a href="#" class="patent-link">Certificate</a>
+            </div>
+        </div>
+
+        <div class="patent-item">
+            <div class="patent-number">Patent No. ZLXXXXXXXX.X</div>
+            <h3 class="patent-title">Your Patent Title Here</h3>
+            <p class="patent-inventors">Inventor1, Inventor2, <u>Your Name</u></p>
+            <p class="patent-date">Granted Date: Month Year</p>
+            <div class="patent-links">
+                <a href="#" class="patent-link">Details</a>
+                <a href="#" class="patent-link">Certificate</a>
+            </div>
+        </div>
+
+        <div class="patent-item">
+            <div class="patent-number">Patent No. ZLXXXXXXXX.X</div>
+            <h3 class="patent-title">Your Patent Title Here</h3>
+            <p class="patent-inventors">Inventor1, Inventor2, <u>Your Name</u></p>
+            <p class="patent-date">Granted Date: Month Year</p>
+            <div class="patent-links">
+                <a href="#" class="patent-link">Details</a>
+                <a href="#" class="patent-link">Certificate</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 OPTIMAL Group. All rights reserved.</p>
+    </footer>
+</body>
+</html>

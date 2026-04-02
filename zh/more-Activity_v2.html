@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1400, initial-scale=1.0, user-scalable=no">
+    <title>团队活动 - OPTIMAL 研究组</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #333333;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        .nav-content {
+            width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-logo {
+            margin-right: 2rem;
+        }
+
+        .nav-logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #666666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            padding: 12px 40px;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            color: #8a2be2;
+            background: rgba(138, 43, 226, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 20px;
+            color: #666666;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            transform: none;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switch a {
+            padding: 5px 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .language-switch a:hover {
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        .language-switch a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+            border-color: #8a2be2;
+        }
+
+        @media (max-width: 1450px) {
+            .language-switch {
+                top: 1rem;
+                right: calc(50% - 600px + 2rem);
+            }
+        }
+
+        @media (max-width: 1280px) {
+            .language-switch {
+                top: 0.5rem;
+                right: calc(50% - 500px + 1rem);
+            }
+            
+            .nav-content {
+                width: 1000px;
+            }
+            
+            .container {
+                width: 960px;
+            }
+        }
+
+        @media (max-width: 1050px) {
+            .language-switch {
+                top: 0.5rem;
+                right: calc(50% - 400px + 1rem);
+            }
+            
+            .nav-content {
+                width: 800px;
+            }
+            
+            .container {
+                width: 760px;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                padding: 10px 25px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .language-switch {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-top: 10px;
+                justify-content: center;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+            
+            .container {
+                width: 100%;
+                padding: 60px 10px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 36px;
+            background: linear-gradient(180deg, #8a2be2, #da70d6);
+            border-radius: 3px;
+        }
+
+        .section-desc {
+            color: #666666;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 30px 20px 20px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer p {
+            color: #999999;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 28px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-item {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .language-switch {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-top: 10px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="language-switch">
+            <a href="../maintenance_en.html">English</a>
+            <a href="more-Activity_v2.html" class="active">中文</a>
+        </div>
+        <div class="nav-content">
+            <div class="nav-logo">
+                <a href="../index.html">
+                    <img src="../images/Optimal1.jpg" alt="OPTIMAL Group Logo" width="40px">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="Member_v2.html">成员</a></li>
+                <li class="dropdown">
+                    <a href="#">成果</a>
+                    <div class="dropdown-content">
+                        <a href="Publication_v2.html">论文</a>
+                        <a href="Project_v2.html">项目</a>
+                        <a href="Books_v2.html">著作</a>
+                        <a href="Patents_v2.html">专利</a>
+                    </div>
+                </li>
+                <li><a href="Resource_v2.html">资源</a></li>
+                <li><a href="../maintenance.html">谓词库</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">团队活动</h2>
+                <p class="section-desc">我们的研究之旅时刻</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="../Image/20201017_Hefei.jpg" alt="20201017, 安徽合肥" />
+                    <div class="gallery-item-caption">20201017, 安徽合肥</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/20201017_Hefei2.jpg" alt="20201017, 安徽合肥" />
+                    <div class="gallery-item-caption">20201017, 安徽合肥</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/20201017_Hefei3.jpg" alt="20201017, 安徽合肥" />
+                    <div class="gallery-item-caption">20201017, 安徽合肥</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/20190112HZ.jpg" alt="20190112, 浙江杭州" />
+                    <div class="gallery-item-caption">20190112, 浙江杭州</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/20170514GuiLin.jpg" alt="20170514, 广西桂林" />
+                    <div class="gallery-item-caption">20170514, 广西桂林</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/201610HangZhou.jpg" alt="201610, 浙江杭州" />
+                    <div class="gallery-item-caption">201610, 浙江杭州</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/201609ShaoXing.jpg" alt="201609, 浙江绍兴" />
+                    <div class="gallery-item-caption">201609, 浙江绍兴</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/201602Hangzhou.jpg" alt="201602, 浙江杭州" />
+                    <div class="gallery-item-caption">201602, 浙江杭州</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/201405Jinhua.jpg" alt="201405, 浙江金华" />
+                    <div class="gallery-item-caption">201405, 浙江金华</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/201311Hangzhou.jpg" alt="201311, 浙江杭州" />
+                    <div class="gallery-item-caption">201311, 浙江杭州</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/201305Suzhou.jpg" alt="201305, 江苏苏州" />
+                    <div class="gallery-item-caption">201305, 江苏苏州</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../Image/201305Suzhou.jpg" alt="201305, 江苏苏州" />
+                    <div class="gallery-item-caption">201305, 江苏苏州</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 OPTIMAL Group. 保留所有权利。</p>
+        <p id="page-views" style="margin-top: 10px; font-size: 12px; color: #999;">页面访问次数：0</p>
+    </footer>
+    
+    <script>
+        // 页面访问次数统计
+        function updatePageViews() {
+            // 从本地存储获取当前访问次数
+            let views = localStorage.getItem('page_views_activity_more_zh') || 0;
+            views = parseInt(views) + 1;
+            // 保存更新后的访问次数
+            localStorage.setItem('page_views_activity_more_zh', views);
+            // 更新页面显示
+            document.getElementById('page-views').textContent = `页面访问次数：${views}`;
+        }
+        
+        // 页面加载时更新访问次数
+        window.onload = updatePageViews;
+    </script>
+</body>
+</html>

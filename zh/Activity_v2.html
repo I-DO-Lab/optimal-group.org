@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活动相册 - OPTIMAL 研究组</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" media="screen"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #4a2c6a 100%);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            background: rgba(168, 85, 247, 0.3);
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .language-switch a {
+            padding: 5px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .language-switch a:hover {
+            background: rgba(168, 85, 247, 0.3);
+            color: #ffffff;
+        }
+        
+        .language-switch a.active {
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            color: #ffffff;
+            border-color: #a855f7;
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-info {
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .photo-info p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .language-switch {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-top: 10px;
+                justify-content: center;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .album-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="language-switch">
+            <a href="../maintenance_en.html">English</a>
+            <a href="Activity_v2.html" class="active">中文</a>
+        </div>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="index_v2.html">
+                    <img src="../images/Optimal1.jpg" alt="Optimal Group Logo"width="40px">
+                </a>
+                <span class="logo-text">Optimal Group</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index_v2.html">首页</a></li>
+                <li><a href="Member_v2.html">成员</a></li>
+                <li><a href="Publication_v2.html">论文</a></li>
+                <li><a href="Resource_v2.html">资源</a></li>
+                <li><a href="../maintenance.html">谓词库</a></li>
+                <li><a href="../Link_v2.html">链接</a></li>
+                <li><a href="Project_v2.html">项目</a></li>
+                <li><a href="News_v2.html">新闻</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>活动相册</h1>
+            <p>记录我们的研究之旅</p>
+        </div>
+
+        <div class="album-grid">
+            <div class="photo-card">
+                <img src="../Image/20201017_Hefei.jpg" alt="20201017, 安徽合肥">
+                <div class="photo-info">
+                    <p>20201017, 安徽合肥</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/20201017_Hefei1.jpg" alt="20201017, 安徽合肥">
+                <div class="photo-info">
+                    <p>20201017, 安徽合肥</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/20201017_Hefei2.jpg" alt="20201017, 安徽合肥">
+                <div class="photo-info">
+                    <p>20201017, 安徽合肥</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/20201017_Hefei3.jpg" alt="20201017, 安徽合肥">
+                <div class="photo-info">
+                    <p>20201017, 安徽合肥</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/20190112HZ.jpg" alt="20190112, 浙江杭州">
+                <div class="photo-info">
+                    <p>20190112, 浙江杭州</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/20170514GuiLin.jpg" alt="20170514, 广西桂林">
+                <div class="photo-info">
+                    <p>20170514, 广西桂林</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201610HangZhou.jpg" alt="201610, 浙江杭州">
+                <div class="photo-info">
+                    <p>201610, 浙江杭州</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201609ShaoXing.jpg" alt="201609, 浙江绍兴">
+                <div class="photo-info">
+                    <p>201609, 浙江绍兴</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201602Hangzhou.jpg" alt="201602, 浙江杭州">
+                <div class="photo-info">
+                    <p>201602, 浙江杭州</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201405Jinhua.jpg" alt="201405, 浙江金华">
+                <div class="photo-info">
+                    <p>201405, 浙江金华</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201311Hangzhou.jpg" alt="201311, 浙江杭州">
+                <div class="photo-info">
+                    <p>201311, 浙江杭州</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="../Image/201305Suzhou.jpg" alt="201305, 江苏苏州">
+                <div class="photo-info">
+                    <p>201305, 江苏苏州</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 OPTIMAL Group. 保留所有权利。</p>
+        <p id="page-views" style="margin-top: 10px; font-size: 12px; color: rgba(255, 255, 255, 0.5);">页面访问次数：0</p>
+    </footer>
+    
+    <script>
+        // 页面访问次数统计
+        function updatePageViews() {
+            // 从本地存储获取当前访问次数
+            let views = localStorage.getItem('page_views_activity_zh') || 0;
+            views = parseInt(views) + 1;
+            // 保存更新后的访问次数
+            localStorage.setItem('page_views_activity_zh', views);
+            // 更新页面显示
+            document.getElementById('page-views').textContent = `页面访问次数：${views}`;
+        }
+        
+        // 页面加载时更新访问次数
+        window.onload = updatePageViews;
+    </script>
+</body>
+</html>

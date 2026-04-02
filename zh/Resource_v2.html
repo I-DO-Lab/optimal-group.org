@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1400, initial-scale=1.0, user-scalable=no">
+    <title>资源 - OPTIMAL 研究组</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #333333;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        .nav-content {
+            width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-logo {
+            margin-right: 2rem;
+        }
+
+        .nav-logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #666666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            padding: 12px 40px;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            color: #8a2be2;
+            background: rgba(138, 43, 226, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 20px;
+            color: #666666;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            transform: none;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switch a {
+            padding: 5px 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .language-switch a:hover {
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        .language-switch a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+            border-color: #8a2be2;
+        }
+
+        @media (max-width: 1450px) {
+            .language-switch {
+                top: 1rem;
+                right: calc(50% - 600px + 2rem);
+            }
+        }
+
+        @media (max-width: 1280px) {
+            .language-switch {
+                top: 0.5rem;
+                right: calc(50% - 500px + 1rem);
+            }
+            
+            .nav-content {
+                width: 1000px;
+            }
+            
+            .container {
+                width: 960px;
+            }
+        }
+
+        @media (max-width: 1050px) {
+            .language-switch {
+                top: 0.5rem;
+                right: calc(50% - 400px + 1rem);
+            }
+            
+            .nav-content {
+                width: 800px;
+            }
+            
+            .container {
+                width: 760px;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                padding: 10px 25px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .language-switch {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-top: 10px;
+                justify-content: center;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+            
+            .container {
+                width: 100%;
+                padding: 60px 10px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 36px;
+            background: linear-gradient(180deg, #8a2be2, #da70d6);
+            border-radius: 3px;
+        }
+
+        .section-desc {
+            color: #666666;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .resource-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-3px);
+            border-color: #8a2be2;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.15);
+        }
+
+        .resource-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 15px;
+        }
+
+        .resource-desc {
+            color: #666666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #8a2be2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: gap 0.3s ease;
+        }
+
+        .resource-link:hover {
+            gap: 15px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer p {
+            color: #999999;
+            font-size: 14px;
+        }
+
+        .category-section {
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .category-header {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: white;
+            padding: 18px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .category-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+        }
+
+        .category-header .arrow {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-header.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .category-content.active {
+            max-height: 5000px;
+        }
+
+        .resource-list {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .resource-item {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .resource-item:hover {
+            background: rgba(138, 43, 226, 0.1);
+            border-color: rgba(138, 43, 226, 0.3);
+            transform: translateX(5px);
+        }
+
+        .resource-item-content {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .resource-item a {
+            color: #8a2be2;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+
+        .resource-item a:hover {
+            color: #6600cc;
+            text-decoration: underline;
+        }
+
+        .resource-item-desc {
+            color: #666666;
+            font-size: 15px;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .resource-count {
+            font-size: 14px;
+            color: #999999;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 28px;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-item {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .language-switch {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-top: 10px;
+                justify-content: center;
+            }
+
+            .resource-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="language-switch">
+            <a href="../maintenance_en.html">English</a>
+            <a href="Resource_v2.html" class="active">中文</a>
+        </div>
+        <div class="nav-content">
+            <div class="nav-logo">
+                <a href="../index.html">
+                    <img src="../images/Optimal1.jpg" alt="OPTIMAL Group Logo" width="40px">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="Member_v2.html">成员</a></li>
+                <li class="dropdown">
+                    <a href="#">成果</a>
+                    <div class="dropdown-content">
+                        <a href="Publication_v2.html">论文</a>
+                        <a href="Project_v2.html">项目</a>
+                        <a href="Books_v2.html">著作</a>
+                        <a href="Patents_v2.html">专利</a>
+                    </div>
+                </li>
+                <li><a href="Resource_v2.html" class="active">资源</a></li>
+                <li><a href="../maintenance.html">谓词库</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">资源</h2>
+            </div>
+
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>代码 <span class="resource-count">(44个)</span></span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/2DLDAL1S.html">2DLDAL1S</a>
+                                <div class="resource-item-desc">: Sparse L1-norm two dimensional linear discriminant analysis via the generalized elastic net regularization</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/BLp2DLDA.html">BLp2DLDA</a>
+                                <div class="resource-item-desc">: Robust bilateral Lp-norm two-dimensional linear discriminant analysis</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/D2RLPP.html">D2RLPP</a>
+                                <div class="resource-item-desc">: 2DRLPP: Robust Two-Dimensional Locality Preserving Projection with Regularization</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/ESQSVR.html">ESQSVR</a>
+                                <div class="resource-item-desc">: Extensive semi-quantitative regression</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/ETSVR.html">ETSVR</a>
+                                <div class="resource-item-desc">: ETSVR is a varepsilon-twin support vector machine for regression. This package provides an implementation of the ETSVR method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/FSNSVQR.html">FSNSVQR</a>
+                                <div class="resource-item-desc">: Feature selection for nonlinear support vector quantile regression</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/FSTWSVM.html">FSTWSVM</a>
+                                <div class="resource-item-desc">: FSTWSVM is a feature selection method for twin support vector machines, including linear and nonlinear feature selection. This package provides an implementation of the FSTWSVM method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/G2DLDA.html">G2DLDA</a>
+                                <div class="resource-item-desc">: Generalized two-dimensional linear discriminant analysis with regularization</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/L12DLDA.html">L12DLDA</a>
+                                <div class="resource-item-desc">: L12DLDA is a L1-norm 2-dimension linear discriminant analysis for demension redundency. This package provides an implementation of the L12DLDA method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/L1BLDA.html">L1BLDA</a>
+                                <div class="resource-item-desc">: Robust Bhattacharyya bound linear discriminant analysis through an adaptive non-greedy algorithm</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/L1NPSVM.html">L1NPSVM</a>
+                                <div class="resource-item-desc">: L1NPSVM is a L1-norm nonparallel proximalsupport vector machine for binary classification. This package provides an implementation of the L1NPSVM method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/LSPTSVM.html">LSPTSVM</a>
+                                <div class="resource-item-desc">: LSPTSVM is a least squares recursive projection twin support vector machine for binary classification. This package provides an implementation of the LSPTSVM (only linear case) method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/LSTBSVC.html">LSTBSVC</a>
+                                <div class="resource-item-desc">: Clustering by twin support vector machine and least square twin support vector classifier with uniform output coding</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/LTSVM.html">LTSVM</a>
+                                <div class="resource-item-desc">: An efficient weighted Lagrangian twin support vector machine for imbalanced data classification</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/LUHC.html">LUHC</a>
+                                <div class="resource-item-desc">: LUHC is a Laplacian Unit-Hyperplane Learning for positive and unlabeled learning problem. This package provides a Demo Matlab code for LUHC</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/LkPPC.html">LkPPC</a>
+                                <div class="resource-item-desc">: LkPPC is a local k-Proximal Plane Clustering method for clustering. This package provides an implementation of the LkPPC method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/LpNPSVM.html">LpNPSVM</a>
+                                <div class="resource-item-desc">: Robust nonparallel proximal support vector machine with Lp-norm regularization</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/LqLSSVM.html">LqLSSVM</a>
+                                <div class="resource-item-desc">: Feature selection via sparse $L_q$-norm least squares support vector machines for small size samples</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/MBLDA.html">MBLDA</a>
+                                <div class="resource-item-desc">: MBLDA: a novel multiple between-class linear discriminant analysis</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/MDR.html">MDR</a>
+                                <div class="resource-item-desc">: Minimum deviation distribution machine for large scale regression</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/MLSPTSVM.html">MLSPTSVM</a>
+                                <div class="resource-item-desc">: Multiple recursive projection twin support vector machine for multi-class classification</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/MLTSVM.html">MLTSVM</a>
+                                <div class="resource-item-desc">: Multi-label twin support vector machine for pattern classification</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/MPSVM.html">MPSVM</a>
+                                <div class="resource-item-desc">: MPSVM is a manifold proximal support vector machine for semi-supervised learnining problem. This package provides a Demo Matlab code for MPSVM</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/MVSVM-L1.html">MVSVM-L1</a>
+                                <div class="resource-item-desc">: Robust L1-norm multi-weight vector projection support vector machine for pattern recognition</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/NHSVM.html">NHSVM</a>
+                                <div class="resource-item-desc">: NHSVM is a nonparallel hyperplane support vector machine for binary classification. This package provides an implementation of the NHSVM method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/PCC.html">PCC</a>
+                                <div class="resource-item-desc">: PCC is a proximal classifier with consistency for binary classification. This package provides an implementation of the PCC method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/PDLSSVM.html">PDLSSVM</a>
+                                <div class="resource-item-desc">: Joint sample and feature selection via sparse primal and dual LSSVM</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/PINSVR.html">PINSVR</a>
+                                <div class="resource-item-desc">: A novel parametric-insensitive nonparallel support vector machine for regression</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/PPWMs.html">PPWMs</a>
+                                <div class="resource-item-desc">: PPWMs is a tool for predicting palmitoylation sites based on protein sequence. This package provides an implementation of the PPWMs by C++ code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/RDA.html">RDA</a>
+                                <div class="resource-item-desc">: Reversible discriminant analysis</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/RFDPC.html">RFDPC</a>
+                                <div class="resource-item-desc">: A general model for plane-based clustering with loss function</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/RPTSVM.html">RPTSVM</a>
+                                <div class="resource-item-desc">: RPTSVM is a regularization recursive projection twin support vector machine for binary classification. This package provides an implementation of the RPTSVM (PTSVM is a special case of RPTSVM) method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/RSLDA.html">RSLDA</a>
+                                <div class="resource-item-desc">: Robust and sparse linear discriminant analysis via alternating direction method of multipliers</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/RTBSVM.html">RTBSVM</a>
+                                <div class="resource-item-desc">: Robust Rescaled Hinge Loss Twin Support Vector Machine for Imbalanced Noisy Classification</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/RampTWSVC.html">RampTWSVC</a>
+                                <div class="resource-item-desc">: Ramp-based Twin Support Vector Clustering</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/RankSVM-PTM.html">RankSVM-PTM</a>
+                                <div class="resource-item-desc">: Prediction of acetylation and succinylation in proteins based on multi-label learning RankSVM</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/SGTSVM.html">SGTSVM</a>
+                                <div class="resource-item-desc">: Stochastic gradient twin support vector machine for large scale data</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/STPMSVM.html">STPMSVM</a>
+                                <div class="resource-item-desc">: STPMSVM is a smooth twin parametric-margin support vector machine for binary classification. This package provides an implementation of the STPMSVM method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/TLRM.html">TLRM</a>
+                                <div class="resource-item-desc">: Large Scale Non-convex Regression with Truncated Loss via Majorization-Minimization Algorithm</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/TWSVC.html">TWSVC</a>
+                                <div class="resource-item-desc">: TWSVC is a twin support vector machine for clustering. This package provides an implementation of the TWSVC method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/TWSVM.html">TWSVM</a>
+                                <div class="resource-item-desc">: TWSVM is a twin support vector machine for binary classification. This package provides an implementation of the TBSVM (TWSVM is a special case of TBSVM) method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/WLETSVR.html">WLETSVR</a>
+                                <div class="resource-item-desc">: Weighted epsilon-twin support vector machine for regression</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/WLTSVM.html">WLTSVM</a>
+                                <div class="resource-item-desc">: WLTSVM is a weighted Lagrangian twin support vector machine for imbalanced data classification. This package provides an implementation of the WLTSVM method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Code/kPPC.html">kPPC</a>
+                                <div class="resource-item-desc">: k-Proximal Plane Clustering</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>数据集 <span class="resource-count">(2个)</span></span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Datasets/Crossplane.html">Crossplane</a>
+                                <div class="resource-item-desc">: A Matlab code for two dimensional crossplane (Xor) data generator used in TBSVM and NHSVM</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Datasets/Realestatepricedata.rar">Real Estate Price Data</a>
+                                <div class="resource-item-desc">: A realife dataset with semi-quantitative information</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span>工具 <span class="resource-count">(5个)</span></span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="category-content">
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Tools/FSNSVQR.zip">FSNSVQR</a>
+                                <div class="resource-item-desc">: Feature selection for nonlinear support vector quantile regression</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Tools/PCC.rar">PCC</a>
+                                <div class="resource-item-desc">: PCC is a proximal classifier with consistency for binary classification. This package provides an implementation of the PCC method by Matlab code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Tools/PPWMs.rar">PPWMs</a>
+                                <div class="resource-item-desc">: PPWMs is a tool for predicting palmitoylation sites based on protein sequence. This package provides an implementation of the PPWMs by C++ code</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Tools/PTWSVM.rar">PTWSVM</a>
+                                <div class="resource-item-desc">: Projection twin support vector machine for binary classification</div>
+                            </div>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-item-content">
+                                <a href="../Resources/Tools/matlab_TBSVM.rar">Matlab TBSVM</a>
+                                <div class="resource-item-desc">: Twin bounded support vector machine implementation in Matlab</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleCategory(header) {
+            header.classList.toggle('active');
+            var content = header.nextElementSibling;
+            content.classList.toggle('active');
+        }
+    </script>
+
+    <footer class="footer">
+        <p>© 2026 OPTIMAL Group. 保留所有权利。</p>
+        <p id="page-views" style="margin-top: 10px; font-size: 12px; color: #999;">页面访问次数：0</p>
+    </footer>
+    
+    <script>
+        // 页面访问次数统计
+        function updatePageViews() {
+            // 从本地存储获取当前访问次数
+            let views = localStorage.getItem('page_views_resource_zh') || 0;
+            views = parseInt(views) + 1;
+            // 保存更新后的访问次数
+            localStorage.setItem('page_views_resource_zh', views);
+            // 更新页面显示
+            document.getElementById('page-views').textContent = `页面访问次数：${views}`;
+        }
+        
+        // 页面加载时更新访问次数
+        window.onload = function() {
+            toggleCategory(document.querySelector('.category-header'));
+            updatePageViews();
+        };
+    </script>
+</body>
+</html>

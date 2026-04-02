@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1400, initial-scale=1.0, user-scalable=no">
+    <title>News - OPTIMAL Group</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" media="screen"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #333333;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        .nav-content {
+            width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-logo {
+            margin-right: 2rem;
+        }
+
+        .nav-logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #666666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            padding: 10px 30px;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            color: #8a2be2;
+            background: rgba(138, 43, 226, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 20px;
+            color: #666666;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            transform: none;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: #666666;
+        }
+
+        .news-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .news-item {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .news-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(138, 43, 226, 0.15);
+            border-color: rgba(138, 43, 226, 0.2);
+        }
+
+        .news-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .news-content {
+            font-size: 1rem;
+            color: #666666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .news-date {
+            font-size: 0.9rem;
+            color: #999999;
+            font-weight: 500;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: #ffffff;
+            border: 2px dashed #e0e0e0;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .empty-state-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-state h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #333333;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            color: #666666;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #999999;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 4rem;
+            background: #f8f9fa;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-switch a {
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .language-switch a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+            border-color: #8a2be2;
+        }
+
+        .language-switch a:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .language-switch {
+                position: static;
+                margin-top: 10px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="nav-content">
+            <div class="nav-logo">
+                <a href="index_v2.html">
+                    <img src="../Image/Optimal_img.jpg" alt="OPTIMAL Group Logo" width="40px">
+                </a>
+            </div>
+            <div class="language-switch">
+            <a href="News_v2.html" class="active">English</a>
+            <a href="../zh/News_v2.html">中文</a>
+        </div>
+            <ul class="nav-links">
+                <li><a href="index_v2.html">Home</a></li>
+                <li><a href="Member_v2.html">Members</a></li>
+                <li class="dropdown">
+                    <a href="#">Research</a>
+                    <div class="dropdown-content">
+                        <a href="Publication_v2.html">Publications</a>
+                        <a href="Project_v2.html">Projects</a>
+                        <a href="Books_v2.html">Books</a>
+                        <a href="Patents_v2.html">Patents</a>
+                    </div>
+                </li>
+                <li><a href="Resource_v2.html">Resources</a></li>
+                <li><a href="../maintenance_en.html">Predicate Library</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>News & Announcements</h1>
+            <p>Latest Updates from Our Research Group</p>
+        </div>
+
+        <div class="news-list">
+            <div class="news-item">
+                <div class="news-title">Congratulations to Prof. Yuanhai Shao for Being Ranked in Top 0.05% Scientists Globally</div>
+                <div class="news-content">Recently, ScholarGPS released the 2024 list of the world's top 0.05% scientists. Prof. Yuanhai Shao, the group leader, was ranked 14th in the "Lifetime" list for Support Vector Machine research. ScholarGPS collects information on over 30 million scholars worldwide and ranks them based on research output, impact, and paper quality. In 2024, over 200 scholars from mainland China were selected for the "Lifetime" list. Prof. Shao's selection demonstrates the global influence of OPTIMAL Group in this research field.</div>
+                <div class="news-date">2024-12</div>
+            </div>
+            <div class="news-item">
+                <div class="news-title">Prof. Yuanhai Shao Appointed as Editorial Board Member of Neural Networks</div>
+                <div class="news-content">Recently, Prof. Yuanhai Shao was invited to serve as an Editorial Board Member of Neural Networks, a prestigious journal published by Elsevier. Founded in 1988, Neural Networks is a top-tier SCI Q1 journal in engineering, computer science, and artificial intelligence with an impact factor of 7.8 (2023). The journal covers computer science, mathematics, engineering, psychology, AI, and neuroscience, and has high academic reputation in the field of neural networks and artificial intelligence.</div>
+                <div class="news-date">2024-11</div>
+            </div>
+            <div class="news-item">
+                <div class="news-title">Prof. Chunna Li Published Paper in Machine Learning Journal</div>
+                <div class="news-content">The paper "Group feature selection using non-class data" by Prof. Chunna Li, Prof. Weijie Chen, Prof. Yuanhai Shao (corresponding author), Yuangang Pan from A*STAR, and Prof. Ivor W. Tsang from University of Technology Sydney has been published in Machine Learning (IF=2.9). Machine Learning, published by Springer since 1986, is a CCF-recommended Class B journal in artificial intelligence. The paper discovers that F∞-norm SVM implicitly uses non-class data during group feature selection and improves the algorithm to fully exploit the classification information provided by these data.</div>
+                <div class="news-date">2025-06</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Optimal Group. All rights reserved.</p>
+    </footer>
+</body>
+</html>
