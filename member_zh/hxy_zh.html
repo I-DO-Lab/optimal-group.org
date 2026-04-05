@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1400, initial-scale=1.0, user-scalable=no">
+    <title>化祥雨个人主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            background-color: #f5f5f5;
+            color: #2d2d2d;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        a {
+            color: #8a2be2;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #6a0dad;
+            text-decoration: underline;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-logo {
+            margin-right: 2rem;
+        }
+
+        .nav-logo img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #666666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            padding: 12px 40px;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            color: #8a2be2;
+            background: rgba(138, 43, 226, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 1rem;
+            right: calc(50% - 700px + 2rem);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .language-switch a {
+            padding: 5px 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .language-switch a:hover {
+            background: rgba(138, 43, 226, 0.1);
+        }
+        
+        .language-switch a.active {
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: #ffffff;
+            border-color: #8a2be2;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 20px;
+            color: #666666;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            transform: none;
+        }
+
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            min-height: calc(100vh - 100px);
+        }
+
+        .left-section {
+            width: 300px;
+            background: white;
+            padding: 40px 30px;
+            border-right: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8a2be2 0%, #da70d6 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .profile-name-en {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-info {
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .contact-icon {
+            width: 20px;
+            margin-right: 10px;
+            text-align: center;
+            color: #8a2be2;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: block;
+            padding: 8px 15px;
+            margin-bottom: 10px;
+            background: rgba(138, 43, 226, 0.1);
+            color: #8a2be2;
+            border-radius: 20px;
+            font-size: 14px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .social-link:hover {
+            background: rgba(138, 43, 226, 0.15);
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        .right-section {
+            flex: 1;
+            padding: 40px;
+            background: white;
+            overflow-y: auto;
+            min-height: 100vh;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #8a2be2;
+        }
+
+        .timeline-item {
+            margin-bottom: 25px;
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #8a2be2;
+            margin-bottom: 5px;
+        }
+
+        .timeline-organization {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .timeline-description {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .research-interests {
+            margin-top: 20px;
+        }
+
+        .research-text {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .go-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(90deg, #8a2be2, #da70d6);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(138, 43, 226, 0.3);
+            transition: all 0.3s;
+        }
+
+        .go-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+            text-decoration: none;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: auto;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            background-color: #f5f5f5;
+            color: #2d2d2d;
+            line-height: 1.7;
+            overflow-x: auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div style="background: #ffffff; border-bottom: 1px solid #e0e0e0; padding: 10px 0;">
+        <div style="width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 30px; padding: 0 20px;">
+            <img src="../Image/Optimal_img.jpg" alt="OPTIMAL Group Logo" width="300px">
+            <div style="text-align: center; flex: 1;">
+                <h1 style="margin: 0; font-size: 24px; font-weight: 700; background: linear-gradient(90deg, #8a2be2, #da70d6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">OPTimization for Intellegent MAchine Learning</h1>
+            </div>
+            <div class="language-switch" style="position: static;">
+                <a href="example.html">English</a>
+                <a href="example_zh.html" class="active">中文</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="left-section">
+            <div class="profile-photo" style="background: #f0f0f0;">
+                <img src="../people_images/hxy.jpg" alt="化祥雨照片" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            </div>
+            <h1 class="profile-name">化祥雨</h1>
+            <p class="profile-name-en">Xiang-Yu Hua</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>副研究员, OPTIMAL Group</span>
+                </div>
+                <div class="contact-item">
+                    <span>邮箱：hxy9069@163.com</a></span>
+                </div>
+                <div class="contact-item">
+                    <span>专业：理论经济学</a></span>
+                </div>
+                <div class="contact-item">
+                    <span>方向：区域经济与经济地理、科技创新与产业规划、机器学习与空间智能、经济战略与公共政策</a></span>
+                </div>
+                <div class="contact-item">
+                    <span>导师：<a href="#">杨志民教授、<a href="#">邵元海教授、<a href="#">叶娅芬教授、</a></span>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://scholar.google.com/citations?user=EvQEj2sAAAAJ&hl=en" class="social-link">💻 Google Scholar</a>
+                <a href="#" class="social-link">📚 GitHub</a>
+                <a href="#" class="social-link">🔍 ORCID</a>
+            </div>
+        </div>
+        
+        <div class="right-section">
+            <div class="section">
+                <h2 class="section-title">个人简介</h2>
+                <div class="timeline-item" style="text-align: justify; text-indent: 2em;">
+		化祥雨，浙江科技大学经济学院、德语国家研究中心（省级重点智库）副研究员，硕士生导师，浙江工业大学管理学博士，浙江大学理论经济学博士后，合作导师金祥荣教授，应用统计专业硕士学位点负责人，经济战略与区域发展研究团队负责人，国务院发展研究中心访问学者，中国区域科学协会会员，国际前沿机器学习OPTIMAL团队核心成员，浙江省中小企业研究会理事，曾借调科技部二司从事区域科技创新工作，曾任浙江省发展改革委智库浙江省经济信息中心产业经济部副主任，长期从事区域经济、经济地理、空间经济、产业经济、共同富裕、科技创新、机器学习等研究。已在国际SCI期刊《Neurocomputing》《Applied Intelligence》、SSCI期刊《Humanities and Social Sciences Communications》和国内一级期刊《经济地理》《地理科学》上发表学术论文40多篇，在国家一级出版社独著学术专著1部。主持国家社会科学基金面上项目、教育部人文社会科学研究规划青年基金项目、浙江省哲学社会科学规划一般项目、浙江省自然科学基金青年基金等国家级省部级项目多项，执笔或参与完成浙江省政府研究室、浙江省咨询委、浙江省发改委、地市发改委等课题研究或规划150余项，研究成果累计获国家级省部级采纳批示20余篇。《Asia-Pacific Journal of Regional Science》《Land》《Applied Sciences》《Transactions in Energy and Sustainability》《Fuzzy Systems and Data Mining》《地理研究》《地理科学》《自然资源学报》《地理科学进展》《地球信息科学学报》《华东经济管理》等国际会议、期刊审稿专家。
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">教育背景</h2>
+                <div class="timeline-item">
+                    <div class="timeline-title">2017.12-2021.08，博士后</div>
+                    <div class="timeline-organization">浙江大学，经济学院，理论经济学，政治经济学</div>
+                    <div class="timeline-title">2013.09-2016.06，博士</div>
+                    <div class="timeline-organization">浙江工业大学，经贸管理学院，工商管理（硕转博），技术经济及管理</div>
+                    <div class="timeline-title">2011.09-2013.06，硕士</div>
+                    <div class="timeline-organization">浙江工业大学，理学院，数学与应用数学，数据挖掘与支持向量机</div>
+                    <div class="timeline-title">2007.09-2011.06，本科</div>
+                    <div class="timeline-organization">云南民族大学，数学与计算机科学学院，数学与应用数学</div>
+
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">工作经历</h2>
+                <div class="timeline-item">
+                    <div class="timeline-title">2023.11-至今，副研究员</div>
+                    <div class="timeline-organization">浙江科技大学，经济学院</div>
+                    <div class="timeline-title">2023.11-2024.03，访问学者</div>
+                    <div class="timeline-organization">国务院发展研究中心，产业经济研究部</div>
+                    <div class="timeline-title">2025.11-2026.04，借调</div>
+                    <div class="timeline-organization">科技部，二司</div>
+                    <div class="timeline-title">2016.07-2023.11，副研究员</div>
+                    <div class="timeline-organization">浙江省经济信息中心（浙江省发改委智库），经济监测预测处，产业经济部副主任</div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">科研成果（部分）</h2>
+                <ol style="list-style-type: decimal; padding-left: 30px; margin: 0; text-align: justify">
+                   <li style="margin-bottom: 20px;"><strong>Xiang-Yu Hua</strong>, Hai-Ping Lv, Xiang-Rong Jin. Research on High-Quality Development Efficiency and Total Factor Productivity of Regional Economies in China. Sustainability, 2021, 13(15): 8287. (SSCI & SCI, JCR二区, IF=3.900) </li>
+                   <li style="margin-bottom: 20px;">Hai-ping Lv, Yi Lian, and <strong>Xiang-Yu Hua*</strong>. The relationship between FDI quality, new quality productivity forces, and economic resilience in China’s Yangtze River Delta region: insights from an empirical spatial Durbin model. Humanities and Social Sciences Communications, 2025, 12(1): 1-19. (SSCI & AHCI, JCR一区, IF=3.600，通讯作者) </li>
+                   <li style="margin-bottom: 20px;">Yan-Ru Guo, Xiang-Fei Yang, <strong>Xiang-Yu Hua*</strong>, and Jun Pan. Bilateral two-dimensional linear discriminant analysis and its applications. The Journal of Supercomputing, 2025, 81(1): 136.（SCI, IF= 2.500, 通讯作者）</li>
+                  <li style="margin-bottom: 20px;">Zhi-Min Yang, <strong>Xiang-Yu Hua*</strong>, Yuan-Hai Shao, Ya-Fen Ye. A novel parametric-insensitive nonparallel support vector machine for regression. Neurocomputing, 2016, 171: 649-663.（SCI二区Top, IF= 6.000, 通讯作者, 导师一作）</li>
+                  <li style="margin-bottom: 20px;">Yuan-Hai Shao, <strong>Xiang-Yu Hua</strong>, Li-Ming Liu, Zhi-Min Yang, Nai-Yang Deng. Combined outputs framework for twin support vector machines. Applied Intelligence, 2015, 43(2): 424-438.（SCI三区, IF=5.300, 导师一作）</li>
+                 <li style="margin-bottom: 20px;">Ya-Fen Ye, Jun-Bin Gao, Yuan-Hai Shao, Chun-Na Li, Yan Jin, <strong>Xiang-Yu Hua</strong>. Robust support vector regression with generic quadratic nonconvex ε-insensitive loss. Applied Mathematical Modelling, 2020, 82: 235-251. (SCI一区Top, IF=5.336)</li>
+                 <li style="margin-bottom: 20px;"><strong>化祥雨</strong>,金祥荣,吕海萍,叶娅芬,邵元海. 高质量发展耦合协调时空格局演化及影响因素——以浙江省县域为例. 地理科学, 2021, 41(2): 223-231. (国内一级, CSSCI，高被引论文)</li>
+                 <li style="margin-bottom: 20px;"><strong>化祥雨</strong>,杨志民,叶娅芬. 金融空间联系与经济增长关系——基于江苏省县域的实证研究. 经济地理, 2016, 36(3): 32-40. (国内一级, CSSCI)</li>
+                 <li style="margin-bottom: 20px;">杨志民,<strong>化祥雨*</strong>,叶娅芬,邵元海. 金融空间联系及K-means聚类中心等级识别研究——以长三角为例. 地理科学, 2015, 35(2): 144-150. (国内一级, CSSCI, 通讯作者, 导师一作)</li>
+                 <li style="margin-bottom: 20px;">杨志民,<strong>化祥雨*</strong>,叶娅芬,邵元海. 金融空间联系与SOM神经网络中心等级识别——以浙江省县域为例. 经济地理, 2014, 34(12): 93-98. (国内一级, CSSCI, 通讯作者, 导师一作)</li>
+                 <li style="margin-bottom: 20px;">杨志民,<strong>化祥雨*</strong>,邵元海,叶娅芬. 外商直接投资空间联系研究——以浙江省为例. 经济地理, 2013, 33(11): 21-27. (国内一级, CSSCI, 通讯作者, 导师一作)</li>
+                 <li style="margin-bottom: 20px;">吕海萍,池仁勇,<strong>化祥雨</strong>. 创新资源协同空间联系与区域经济增长——基于中国省域数据的实证分析. 地理科学, 2017, 37(11): 1649-1658. (国内一级, CSSCI)</li>
+                 <li style="margin-bottom: 20px;"><strong>化祥雨</strong>.长三角区域金融空间联系研究——金融地理学视角. 北京: 地质出版社, 2019. （国家一级出版社）</li>
+                </ol>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">项目课题（部分）</h2>
+                <ol style="list-style-type: decimal; padding-left: 30px; margin: 0;">
+                    <li style="margin-bottom: 20px;">民营企业内卷式竞争形成机理、传导机制及破解路径研究（25BJL022），2025年，国家社会科学基金一般项目，主持</li>
+                    <li style="margin-bottom: 20px;">多尺度视阈下共同富裕时空演化机制、仿真模拟预测与路径优化研究（24YJC790063），2024年，教育部人文社会科学研究规划青年基金项目，主持</li>
+                    <li style="margin-bottom: 20px;">浙江省县域高质量发展水平测度、演化机理及时空效应模拟预测研究（21NDJC198YB），2019年，浙江省哲学社会科学规划课题一般项目，主持</li>
+                    <li style="margin-bottom: 20px;">基于非平行支持向量回归机的浙江省高质量发展动态测度、时空格局演化与经济增长研究（LQ19D010001），2018年，浙江省自然科学基金青年基金项目，主持</li>
+                    <li style="margin-bottom: 20px;">中国动态金融状况指数构建及应用：基于支持向量机的研究，2014年，浙江省大学生科技创新活动计划（新苗人才计划）项目，主持</li>
+                    <li style="margin-bottom: 20px;">提升浙江国际竞争力的对策研究，2018年，浙江省政府研究室、浙江省软科学计划重大项目，主要执笔人</li>
+                </ol>
+            </div>
+
+
+ <div class="section">
+                <h2 class="section-title">资政报告（部分）</h2>
+                <ol style="list-style-type: decimal; padding-left: 30px; margin: 0;">
+                    <li style="margin-bottom: 20px;">2026年，******，被国家部委采用，1/4</li>
+                    <li style="margin-bottom: 20px;">2025年，******，被国家部委采用，1/3</li>
+                    <li style="margin-bottom: 20px;">2025年，******，被国家部委采用，1/3</li>
+                    <li style="margin-bottom: 20px;">2025年，******，被国家部委采用，1/3</li>
+                    <li style="margin-bottom: 20px;">2021年，全省社会消费品零售总额***，获省长、常务副省长肯定性批示，主要执笔人</li>
+                    <li style="margin-bottom: 20px;">2021年，当前全省经济运行***，获省长肯定性批示，主要执笔人</li>
+                    <li style="margin-bottom: 20px;">2020年，共克时艰 化危为机***，获省委书记、常务副省长肯定性批示，主要执笔人</li>
+                    <li style="margin-bottom: 20px;">2023年，关于促进大宗消费和大众消费 加快释放消费潜力的若干举措，由省发展改革委正式发布，主要执笔人</li>
+                    <li style="margin-bottom: 20px;">2017年，浙江省服务业“四大经济”创新发展行动方案，由省政府办公厅正式发布，主要执笔人</li>
+                </ol>
+            </div>
+
+
+            <div class="section">
+                <h2 class="section-title">荣誉奖励</h2>
+                <div style="padding-left: 0; margin: 0;">
+                    <div style="margin-bottom: 15px; display: flex; justify-content: space-between;"><span><span style="margin-right: 10px;">1.</span>中国知网“高被引学者Top5%”</span><span>2024-2025年</span></div>
+                    <div style="margin-bottom: 15px; display: flex; justify-content: space-between;"><span><span style="margin-right: 10px;">2.</span>中共浙江省经济信息中心委员会嘉奖</span><span>2023年</span></div>
+                    <div style="margin-bottom: 15px; display: flex; justify-content: space-between;"><span><span style="margin-right: 10px;">3.</span>浙江省发展和改革委员会优秀共产党员</span><span>2022年</span></div>
+                    <div style="margin-bottom: 15px; display: flex; justify-content: space-between;"><span><span style="margin-right: 10px;">4.</span>浙江省经济信息中心“岗位标兵”，中共浙江省经济信息中心委员会嘉奖</span><span>2021年</span></div>
+                    <div style="margin-bottom: 15px; display: flex; justify-content: space-between;"><span><span style="margin-right: 10px;">5.</span>浙江工业大学优秀博士毕业生</span><span>2016年</span></div>
+                    <div style="margin-bottom: 15px; display: flex; justify-content: space-between;"><span><span style="margin-right: 10px;">6.</span>博士研究生国家奖学金</span><span>2015年</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="go-top">↑</a>
+
+    <div class="footer">
+        <p>© 2024 OPTIMAL Group. 保留所有权利。 | 最后更新：2026年4月3日</p>
+    </div>
+</body>
+</html>
