@@ -77,40 +77,185 @@
             </div>
             <h1 class="profile-name">黄凌伟</h1>
             <p class="profile-name-en">Ling-Wei Huang</p>
+
+
+
+
+
+<!-- ■■■■■■■■■■■■■■■■■■■■漩涡动画容器■■■■■■■■■■■■■■■■■■■■ -->
+<!-- 旋转动画 (简洁悬浮版) -->
+<!-- 将此DIV放置在页面<body>内的任意位置，建议在</body>标签前 -->
+<div id="galaxy-container"></div>
+
+<script>
+    (function() {
+        // ====================== 【配置区：请修改此处参数】 ======================
+        const CONFIG = {
+            // 1. 位置与大小配置
+            POSITION: {
+                top: '0.6%',      // 距顶部距离，例如 '20px', '10%', '50%' (居中需结合transform)
+                //right: '20px',    // 距右侧距离
+                left: '18%',   // 如需靠左，请注释上一行，取消注释此行并设置值
+                // bottom: '20px', // 如需靠下，请注释top行，取消注释此行并设置值
+                width: '220px',   // 动画区域宽度
+                height: '220px'   // 动画区域高度
+            },
+            // 2. 视觉样式配置
+            STYLE: {
+                particleCount: 73,        // 粒子数量，影响性能
+                baseHue: 270,              // 主色调 (270为团队紫色)
+                particleBaseSize: 0.5,     // 粒子基础大小
+                spiralTightness: .05,      // 漩涡紧密度 (0.1-1.0)，值越大旋臂越紧
+                rotationSpeed: 0.001,     // 整体旋转速度
+                enableTrails: true,        // 是否开启粒子轨迹拖尾
+                trailDecay: 0.93           // 拖尾衰减速度 (0.9-0.99)，值越大拖尾越长
+            }
+        };
+        // ====================== 【配置区结束】 ======================
+
+        // 创建容器并应用样式
+        const container = document.getElementById('galaxy-container');
+        Object.assign(container.style, {
+            position: 'absolute',  //fixed
+            pointerEvents: 'none',
+            zIndex: '9999',
+            overflow: 'hidden',
+            ...CONFIG.POSITION
+        });
+
+        // 创建画布
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        container.appendChild(canvas);
+
+        // 设置画布尺寸
+        function resizeCanvas() {
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // 初始化粒子系统
+        let particles = [];
+        function initParticles() {
+            particles = [];
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const maxDist = Math.min(centerX, centerY) * 0.8;
+
+            for (let i = 0; i < CONFIG.STYLE.particleCount; i++) {
+                // 随机分布在旋臂上
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.pow(Math.random(), CONFIG.STYLE.spiralTightness) * maxDist;
+                
+                particles.push({
+                    angle: angle,
+                    distance: distance,
+                    size: Math.random() * CONFIG.STYLE.particleBaseSize + 0.5,
+                    speed: (0.5 + (1 - distance / maxDist) * 3.5) * CONFIG.STYLE.rotationSpeed, // 内快外慢
+                    hueOffset: (Math.random() - 0.5) * 40, // 色调微调
+                    trail: [] // 用于存储轨迹点
+                });
+            }
+        }
+
+        // 动画循环
+        function animate() {
+            // 清空画布（实现透明背景）
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const time = Date.now() * 0.001;
+
+            particles.forEach(p => {
+                // 更新粒子角度，模拟轨道运动
+                p.angle += p.speed;
+                
+                // 计算粒子位置
+                const x = centerX + Math.cos(p.angle) * p.distance;
+                const y = centerY + Math.sin(p.angle) * p.distance;
+
+                // 绘制轨迹
+                if (CONFIG.STYLE.enableTrails && p.trail) {
+                    p.trail.push({x, y, size: p.size});
+                    if (p.trail.length > 8) p.trail.shift();
+                    
+                    for (let i = 0; i < p.trail.length; i++) {
+                        const point = p.trail[i];
+                        const alpha = (i / p.trail.length) * 0.6;
+                        const hue = (CONFIG.STYLE.baseHue + p.hueOffset) % 360;
+                        
+                        ctx.beginPath();
+                        ctx.fillStyle = `hsla(${hue}, 80%, 65%, ${alpha})`;
+                        ctx.arc(point.x, point.y, point.size * 0.7, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                // 绘制粒子光晕
+                const hue = (CONFIG.STYLE.baseHue + p.hueOffset + Math.sin(time + p.angle) * 10) % 360;
+                const gradient = ctx.createRadialGradient(x, y, 0, x, y, p.size * 3);
+                gradient.addColorStop(0, `hsla(${hue}, 85%, 70%, 0.9)`);
+                gradient.addColorStop(1, `hsla(${hue}, 85%, 70%, 0)`);
+
+                ctx.beginPath();
+                ctx.fillStyle = gradient;
+                ctx.arc(x, y, p.size * 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // 绘制粒子核心
+                ctx.beginPath();
+                ctx.fillStyle = `hsl(${hue}, 85%, 75%)`;
+                ctx.arc(x, y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // 启动动画
+        initParticles();
+        animate();
+
+    })();
+</script>
+<!-- ■■■■■■■■■■■■■■■■■■■■漩涡动画容器■■■■■■■■■■■■■■■■■■■■ -->
+
+
+
+
+
             
             <div class="contact-info">
                 <div class="contact-item">
-<!-- 
-                    <span class="contact-icon">🏫</span>
--->
-                    <span>副教授，博士生导师, OPTIMAL Group成员</span>
+                    <span>副教授，博士生导师, OPTIMAL Group</span>
                 </div>
                 <div class="contact-item">
-<!-- 
-                    <span class="contact-icon">✉️</span>
--->
+                    <span>单位：</span>
+			<span class="contact-padding"><a href="https://www.hainanu.edu.cn/" target="_blank">海南大学</a>，
+										<a href="https://sms.hainanu.edu.cn/" target="_blank">数学与统计学院</a></span>
+		     </span> 
+                </div>
+                <div class="contact-item">
                     <span>邮箱：</span>
 			<span class="contact-padding"><a href="mailto:xhuanglw@163.com">xhuanglw@163.com</a><br>
 				     						<a href="mailto:xhuanglw@hainanu.edu.cn">xhuanglw@hainanu.edu.cn</a></span>
 		     </span> 
                 </div>
                 <div class="contact-item">
-<!-- 
-                    <span class="contact-icon">🎓</span>
--->
                     <span>专业：数学与应用数学</span>
                 </div>
                 <div class="contact-item">
-<!-- 
-                    <span class="contact-icon">🧭</span>
--->
                     <span>方向：</span><span class="contact-padding">完备统计学习理论、核学习、统计优化、机器学习</span>
                 </div>
                 <div class="contact-item">
-<!-- 
-                    <span class="contact-icon">👨‍🏫</span>
--->
-                    <span>导师：邵元海教授，李春娜教授</span>
+                    	<span>导师：
+				<a href="https://i-do-lab.site/member_zh/syh_zh.html" target="_blank">邵元海教授</a>，
+				<a href="https://i-do-lab.site/member_zh/lcn_zh.html" target="_blank">李春娜教授</a>
+			</span>
                 </div>
             </div>
             
@@ -206,5 +351,6 @@
     <div class="footer">
         <p>© 2024 OPTIMAL Group. 保留所有权利。 | 最后更新：2026年4月2日</p>
     </div>
+
 </body>
 </html>
