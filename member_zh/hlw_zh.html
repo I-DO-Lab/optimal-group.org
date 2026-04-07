@@ -28,7 +28,7 @@
         .dropdown:hover .dropdown-content { display: block; animation: fadeInUp 0.3s ease; }
         .dropdown-content a { display: block; padding: 10px 20px; color: #666666; text-decoration: none; font-size: 16px; border-radius: 0; transition: all 0.3s ease; }
         .dropdown-content a:hover { background: rgba(138, 43, 226, 0.1); color: #8a2be2; transform: none; }
-        .container { width: 1200px; margin: 0 auto; padding: 0; display: flex; min-height: calc(100vh - 100px); }
+        .container { width: 1200px; margin: 0 auto; padding: 0; display: flex; min-height: calc(100vh - 100px); position: relative; }
         .left-section { width: 350px; background: white; padding: 40px 30px; border-right: 1px solid #e0e0e0; position: sticky; top: 0; height: 100vh; overflow-y: auto; box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05); }
         .profile-photo { width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, #8a2be2 0%, #da70d6 100%); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 48px; color: white; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3); }
         .profile-name { font-size: 24px; font-weight: 700; color: #333; text-align: center; margin-bottom: 5px; }
@@ -310,11 +310,10 @@
 
 <!-- ■■■■■■■■■■■■■■■■■■■■ 碎裂图片 ■■■■■■■■■■■■■■■■■■■■ -->
 <!-- 将以下整个<div>标签复制到您希望图片出现的HTML位置 -->
-<div style="position: absolute;top: 0%;right: 50%;">
 <div style="
-    position: relative; /* 固定定位，不随页面滚动 */
-    top: 724px;    /* 距底部距离，可改为 top: 20px; */
-    left: 600px;     /* 距右侧距离，可改为 left: 20px; */
+    position: absolute; /* 固定定位，不随页面滚动 */
+    top: 628px;    /* 距底部距离，可改为 top: 20px; */
+    right: 0px;     /* 距右侧距离，可改为 left: 20px; */
     width: 100px;    /* 图片宽度 */
     height: 100px;   /* 图片高度 */
     z-index: 1000;   /* 确保图片在最上10:22 2026/4/7层 */
@@ -327,7 +326,6 @@
     <img src='../images/x.png' 
          alt='图片描述' 
          style='width: 100%; height: 100%; object-fit: cover; display: block;'>
-</div>
 </div>
 <!-- ■■■■■■■■■■■■■■■■■■■■ 碎裂图片 ■■■■■■■■■■■■■■■■■■■■ -->
 
